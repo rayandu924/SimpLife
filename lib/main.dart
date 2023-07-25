@@ -4,16 +4,16 @@ import 'package:flutter/cupertino.dart';
 void main() => runApp(MyApp());
 
 class Settings {
-  Color backGroundColor;
+  Color backGroundPrimaryColor;
+  Color backGroundSecondaryColor;
   Color foreGroundPrimaryColor;
   Color foreGroundSecondaryColor;
-  Color bottomNavigationBarColor;
 
   Settings({
-    this.backGroundColor = const Color.fromARGB(255, 23, 6, 150),
+    this.backGroundPrimaryColor = const Color.fromARGB(255, 23, 6, 150),
+    this.backGroundSecondaryColor = const Color.fromARGB(255, 35, 0, 150),
     this.foreGroundPrimaryColor = const Color.fromARGB(255, 170, 0, 255),
     this.foreGroundSecondaryColor = const Color.fromARGB(255, 255, 255, 255),
-    this.bottomNavigationBarColor = const Color.fromARGB(255, 35, 0, 150),
   });
 }
 
@@ -48,6 +48,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
+  final List<GlobalKey<NavigatorState>> _navigatorKeys = [
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+  ];
+
   List<TabInfo> _tabs = [];
 
   @override
@@ -59,7 +64,16 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: Icon(CupertinoIcons.home),
           label: 'Home',
         ),
-        pageBuilder: () => HomePage(settings: widget.settings),
+        pageBuilder: () => HomePage(
+          settings: widget.settings,
+          onSectionTap: (section) {
+            _navigatorKeys[_selectedIndex].currentState!.push(
+              MaterialPageRoute(
+                builder: (context) => section,
+              ),
+            );
+          },
+        ),
       ),
       TabInfo(
         item: BottomNavigationBarItem(
@@ -73,85 +87,141 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      if (_selectedIndex == index) {
+        _navigatorKeys[index].currentState!.popUntil((route) => route.isFirst);
+      } else {
+        _selectedIndex = index;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: widget.settings.backGroundColor,
-        child: Center(
-          child: _tabs[_selectedIndex].pageBuilder(),
+    return WillPopScope(
+      onWillPop: () async {
+        final isFirstRouteInCurrentTab =
+            !await _navigatorKeys[_selectedIndex].currentState!.maybePop();
+        if (isFirstRouteInCurrentTab) {
+          if (_selectedIndex != 0) {
+            _onItemTapped(0);
+            return false;
+          }
+        }
+        return isFirstRouteInCurrentTab;
+      },
+      child: Scaffold(
+        body: Stack(
+          children: List.generate(_tabs.length, (index) {
+            return Offstage(
+              offstage: _selectedIndex != index,
+              child: Navigator(
+                key: _navigatorKeys[index],
+                onGenerateRoute: (routeSettings) {
+                  return MaterialPageRoute(
+                    builder: (context) => _tabs[index].pageBuilder(),
+                  );
+                },
+              ),
+            );
+          }).toList(),
+        ),
+        bottomNavigationBar: CupertinoTabBar(
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: _tabs.map((tab) => tab.item).toList(),
+          backgroundColor: widget.settings.backGroundSecondaryColor,
+          activeColor: widget.settings.foreGroundPrimaryColor,
+          inactiveColor: widget.settings.foreGroundSecondaryColor,
         ),
       ),
-      bottomNavigationBar: CupertinoTabBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: _tabs.map((tab) => tab.item).toList(),
-        backgroundColor: widget.settings.bottomNavigationBarColor,
-        activeColor: widget.settings.foreGroundPrimaryColor,
-        inactiveColor: widget.settings.foreGroundSecondaryColor,
+    );
+  }
+}
+
+abstract class BaseSectionPage extends StatelessWidget {
+  final Settings settings;
+  final String title;
+
+  BaseSectionPage({
+    required this.settings,
+    required this.title,
+  });
+
+  Widget buildPage(BuildContext context);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+        centerTitle: true,
+        backgroundColor: settings.backGroundSecondaryColor,
       ),
+      body: buildPage(context),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
   final Settings settings;
+  final Function(Widget) onSectionTap;
+
+  HomePage({required this.settings, required this.onSectionTap});
+
+  Widget getPage(String title) {
+    switch (title) {
+      case 'Sport':
+        return SportPage(settings: settings);
+      case 'Alimentation':
+        return AlimentationPage(settings: settings);
+      default:
+        return Center(child: Text('Page non trouvée'));
+    }
+  }
+
   final List<Map<String, dynamic>> items = [
     {
-      'title': 'Al-Fatihah',
-      'subtitle': 'Ayat No: 1',
-      'gradientColors': [Color(0xFFDF98FA), Color(0xFFB070FD), Color(0xFF9055FF)]
+      'title': 'Sport',
+      'subtitle': 'Stay active',
+      'gradientColors': [Color(0xFF60BE93), Color(0xFF1B8D59), Color(0xFF00FFFF)]
     },
     {
-      'title': 'Al-Baqarah',
-      'subtitle': 'Ayat No: 1',
-      'gradientColors': [Color(0xFFFFB157), Color(0xFFFFA057), Color(0xFFFF7D50)]
-    }
-    // Add more items here with different gradientColors...
+      'title': 'Alimentation',
+      'subtitle': 'Stay healthy',
+      'gradientColors': [Color(0xFF60BE93), Color(0xFF1B8D59), Color(0xFF00FFFF)]
+    },
   ];
-
-  HomePage({required this.settings});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: items.length, // now it depends on the number of items
-      padding: EdgeInsets.all(10), // add padding around the ListView
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0), // add vertical space between cards
-          child: CustomContainer(
-            title: items[index]['title']!,
-            subtitle: items[index]['subtitle']!,
-            gradientColors: items[index]['gradientColors'], // get the gradientColors from the items list
-          ),
-        );
-      },
+    return Container(
+      color: settings.backGroundPrimaryColor,
+      child: ListView.builder(
+        itemCount: items.length,
+        padding: EdgeInsets.all(10),
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0),
+            child: GestureDetector(
+              onTap: () => onSectionTap(getPage(items[index]['title'])),
+              child: SectionCardItem(
+                title: items[index]['title'],
+                subtitle: items[index]['subtitle'],
+                gradientColors: items[index]['gradientColors'],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
-
-class ProfilePage extends StatelessWidget {
-  final Settings settings;
-
-  ProfilePage({required this.settings});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text('Profile Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: settings.foreGroundSecondaryColor));
-  }
-}
-
-class CustomContainer extends StatelessWidget {
+class SectionCardItem extends StatelessWidget {
   final String title;
   final String subtitle;
   final List<Color> gradientColors;
 
-  CustomContainer({
+  SectionCardItem({
     required this.title,
     required this.subtitle,
     required this.gradientColors,
@@ -173,7 +243,7 @@ class CustomContainer extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end, // Align children at the end/bottom
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Text(
             title,
@@ -194,6 +264,49 @@ class CustomContainer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class SportPage extends BaseSectionPage {
+  SportPage({required Settings settings})
+      : super(settings: settings, title: 'Sport');
+
+  @override
+  Widget buildPage(BuildContext context) {
+    return Container(
+      color: settings.backGroundPrimaryColor, // Changez cette ligne pour la couleur que vous voulez
+      child: Center(
+        child: Text('Contenu de la section Sport'),
+      ),
+    );
+  }
+}
+
+class AlimentationPage extends BaseSectionPage {
+  AlimentationPage({required Settings settings})
+      : super(settings: settings, title: 'Alimentation');
+
+  @override
+  Widget buildPage(BuildContext context) {
+    return Container(
+      color: settings.backGroundPrimaryColor,
+      child: Center(
+        child: Text('Contenu de la section Alimentation'),
+      ),
+    );
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  final Settings settings;
+
+  ProfilePage({required this.settings});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Profil'),
     );
   }
 }
