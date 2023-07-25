@@ -100,25 +100,34 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class HomePage extends StatelessWidget {
   final Settings settings;
+  final List<Map<String, dynamic>> items = [
+    {
+      'title': 'Al-Fatihah',
+      'subtitle': 'Ayat No: 1',
+      'gradientColors': [Color(0xFFDF98FA), Color(0xFFB070FD), Color(0xFF9055FF)]
+    },
+    {
+      'title': 'Al-Baqarah',
+      'subtitle': 'Ayat No: 1',
+      'gradientColors': [Color(0xFFFFB157), Color(0xFFFFA057), Color(0xFFFF7D50)]
+    }
+    // Add more items here with different gradientColors...
+  ];
 
   HomePage({required this.settings});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10, // change this with the actual number of cards
+      itemCount: items.length, // now it depends on the number of items
       padding: EdgeInsets.all(10), // add padding around the ListView
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.symmetric(vertical: 10.0), // add vertical space between cards
           child: CustomContainer(
-            title: 'Al-Fatihah',
-            subtitle: 'Ayat No: 1',
-            gradientColors: [
-              Color(0xFFDF98FA),
-              Color(0xFFB070FD),
-              Color(0xFF9055FF),
-            ],
+            title: items[index]['title']!,
+            subtitle: items[index]['subtitle']!,
+            gradientColors: items[index]['gradientColors'], // get the gradientColors from the items list
           ),
         );
       },
