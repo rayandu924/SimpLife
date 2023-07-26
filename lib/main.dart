@@ -10,7 +10,7 @@ class Settings {
   Color foreGroundSecondaryColor;
 
   Settings({
-    this.backGroundPrimaryColor = const Color.fromARGB(255, 23, 6, 150),
+    this.backGroundPrimaryColor = const Color.fromARGB(255, 68, 0, 255),
     this.backGroundSecondaryColor = const Color.fromARGB(255, 35, 0, 150),
     this.foreGroundPrimaryColor = const Color.fromARGB(255, 170, 0, 255),
     this.foreGroundSecondaryColor = const Color.fromARGB(255, 255, 255, 255),
@@ -141,16 +141,23 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+class Page {
+  final String title;
+  final Widget Function() buildPage;
+
+  Page({required this.title, required this.buildPage});
+}
+
 abstract class BaseSectionPage extends StatefulWidget {
   final Settings settings;
   final String title;
+  final List<Page> pages;
 
   BaseSectionPage({
     required this.settings,
     required this.title,
+    required this.pages,
   });
-
-  Widget buildPage(BuildContext context);
 
   @override
   _BaseSectionPageState createState() => _BaseSectionPageState();
@@ -158,16 +165,11 @@ abstract class BaseSectionPage extends StatefulWidget {
 
 class _BaseSectionPageState extends State<BaseSectionPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final List<Tab> myTabs = <Tab>[
-    new Tab(text: 'Page 1'),
-    new Tab(text: 'Page 2'),
-    new Tab(text: 'Page 3'),
-  ];
 
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(vsync: this, length: myTabs.length);
+    _tabController = new TabController(vsync: this, length: widget.pages.length);
   }
 
   @override
@@ -185,7 +187,7 @@ class _BaseSectionPageState extends State<BaseSectionPage> with SingleTickerProv
         backgroundColor: widget.settings.backGroundSecondaryColor,
         bottom: TabBar(
           controller: _tabController,
-          tabs: myTabs,
+          tabs: widget.pages.map((page) => Tab(text: page.title)).toList(),
           indicatorColor: widget.settings.foreGroundPrimaryColor,
           labelColor: widget.settings.foreGroundPrimaryColor,
           unselectedLabelColor: widget.settings.foreGroundSecondaryColor,
@@ -193,8 +195,8 @@ class _BaseSectionPageState extends State<BaseSectionPage> with SingleTickerProv
       ),
       body: TabBarView(
         controller: _tabController,
-        children: myTabs.map((Tab tab) {
-          return widget.buildPage(context);
+        children: widget.pages.map((page) {
+          return page.buildPage();
         }).toList(),
       ),
     );
@@ -261,14 +263,15 @@ class _HomePageState extends State<HomePage> {
   Widget getPage(String title) {
     switch (title) {
       case 'Sport':
-        return SportPage(settings: widget.settings);
+        return SportSection(settings: widget.settings);
       case 'Alimentation':
-        return AlimentationPage(settings: widget.settings);
+        return AlimentationSection(settings: widget.settings);
       default:
         return Center(child: Text('Page non trouvée'));
     }
   }
 }
+
 class SectionCardItem extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -320,32 +323,45 @@ class SectionCardItem extends StatelessWidget {
     );
   }
 }
+class SportSection extends BaseSectionPage {
+  SportSection({required Settings settings})
+      : super(
+          settings: settings, 
+          title: 'Sport', 
+          pages: [
+            Page(title: 'Page 1', buildPage: () => Text('Contenu de la page 1')),
+            Page(title: 'Page 2', buildPage: () => Text('Contenu de la page 2')),
+            // Ajoutez d'autres pages ici
+          ],
+        );
 
-class SportPage extends BaseSectionPage {
-  SportPage({required Settings settings})
-      : super(settings: settings, title: 'Sport');
-
-  @override
-  Widget buildPage(BuildContext context) {
+  static Widget _buildSportPage(String pageTitle) {
     return Container(
-      color: settings.backGroundPrimaryColor, // Changez cette ligne pour la couleur que vous voulez
+      // Utilisez la couleur appropriée pour la section Sport
       child: Center(
-        child: Text('Contenu de la section Sport'),
+        child: Text('Contenu de la section Sport - $pageTitle'),
       ),
     );
   }
 }
 
-class AlimentationPage extends BaseSectionPage {
-  AlimentationPage({required Settings settings})
-      : super(settings: settings, title: 'Alimentation');
+class AlimentationSection extends BaseSectionPage {
+  AlimentationSection({required Settings settings})
+      : super(
+          settings: settings, 
+          title: 'Alimentation', 
+          pages: [
+            Page(title: 'Page 1', buildPage: () => Text('Contenu de la page 1')),
+            Page(title: 'Page 2', buildPage: () => Text('Contenu de la page 2')),
+            // Ajoutez d'autres pages ici
+          ],
+        );
 
-  @override
-  Widget buildPage(BuildContext context) {
+  static Widget _buildAlimentationPage(String pageTitle) {
     return Container(
-      color: settings.backGroundPrimaryColor,
+      // Utilisez la couleur appropriée pour la section Alimentation
       child: Center(
-        child: Text('Contenu de la section Alimentation'),
+        child: Text('Contenu de la section Alimentation - $pageTitle'),
       ),
     );
   }
@@ -360,6 +376,26 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text('Profil'),
+    );
+  }
+}
+
+class Content extends StatelessWidget {
+  final String title;
+  final Widget child;
+
+  Content({
+    required this.title,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: child,
     );
   }
 }
