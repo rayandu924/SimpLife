@@ -24,6 +24,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SimpLife',
+      theme: ThemeData(
+        canvasColor: Colors.transparent, // Ajouter cette ligne
+      ),
       home: MyHomePage(settings: settings),
     );
   }
@@ -138,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-abstract class BaseSectionPage extends StatelessWidget {
+abstract class BaseSectionPage extends StatefulWidget {
   final Settings settings;
   final String title;
 
@@ -150,36 +153,66 @@ abstract class BaseSectionPage extends StatelessWidget {
   Widget buildPage(BuildContext context);
 
   @override
+  _BaseSectionPageState createState() => _BaseSectionPageState();
+}
+
+class _BaseSectionPageState extends State<BaseSectionPage> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  final List<Tab> myTabs = <Tab>[
+    new Tab(text: 'Page 1'),
+    new Tab(text: 'Page 2'),
+    new Tab(text: 'Page 3'),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = new TabController(vsync: this, length: myTabs.length);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.title),
         centerTitle: true,
-        backgroundColor: settings.backGroundSecondaryColor,
+        backgroundColor: widget.settings.backGroundSecondaryColor,
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: myTabs,
+          indicatorColor: widget.settings.foreGroundPrimaryColor,
+          labelColor: widget.settings.foreGroundPrimaryColor,
+          unselectedLabelColor: widget.settings.foreGroundSecondaryColor,
+        ),
       ),
-      body: buildPage(context),
+      body: TabBarView(
+        controller: _tabController,
+        children: myTabs.map((Tab tab) {
+          return widget.buildPage(context);
+        }).toList(),
+      ),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final Settings settings;
   final Function(Widget) onSectionTap;
 
   HomePage({required this.settings, required this.onSectionTap});
 
-  Widget getPage(String title) {
-    switch (title) {
-      case 'Sport':
-        return SportPage(settings: settings);
-      case 'Alimentation':
-        return AlimentationPage(settings: settings);
-      default:
-        return Center(child: Text('Page non trouvée'));
-    }
-  }
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
-  final List<Map<String, dynamic>> items = [
+class _HomePageState extends State<HomePage> {
+  List<Map<String, dynamic>> items = [
     {
       'title': 'Sport',
       'subtitle': 'Stay active',
@@ -195,25 +228,45 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: settings.backGroundPrimaryColor,
-      child: ListView.builder(
+      color: widget.settings.backGroundPrimaryColor,
+      child: ReorderableListView.builder(
         itemCount: items.length,
-        padding: EdgeInsets.all(10),
+        onReorder: (oldIndex, newIndex) {
+          setState(() {
+            if (oldIndex < newIndex) {
+              newIndex -= 1;
+            }
+            final Map<String, dynamic> item = items.removeAt(oldIndex);
+            items.insert(newIndex, item);
+          });
+        },
         itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0),
-            child: GestureDetector(
-              onTap: () => onSectionTap(getPage(items[index]['title'])),
-              child: SectionCardItem(
+          return ReorderableDragStartListener(
+            index: index,
+            key: Key('${items[index]['title']}'), // Move key here
+            child: ListTile(
+              title: SectionCardItem(
                 title: items[index]['title'],
                 subtitle: items[index]['subtitle'],
                 gradientColors: items[index]['gradientColors'],
               ),
+              onTap: () => widget.onSectionTap(getPage(items[index]['title'])),
             ),
           );
         },
       ),
     );
+  }
+
+  Widget getPage(String title) {
+    switch (title) {
+      case 'Sport':
+        return SportPage(settings: widget.settings);
+      case 'Alimentation':
+        return AlimentationPage(settings: widget.settings);
+      default:
+        return Center(child: Text('Page non trouvée'));
+    }
   }
 }
 class SectionCardItem extends StatelessWidget {
