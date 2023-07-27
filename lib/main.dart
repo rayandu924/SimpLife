@@ -334,37 +334,18 @@ class SportSection extends BaseSectionPage {
             // Ajoutez d'autres pages ici
           ],
         );
-
-  static Widget _buildSportPage(String pageTitle) {
-    return Container(
-      // Utilisez la couleur appropriée pour la section Sport
-      child: Center(
-        child: Text('Contenu de la section Sport - $pageTitle'),
-      ),
-    );
-  }
 }
 
 class AlimentationSection extends BaseSectionPage {
   AlimentationSection({required Settings settings})
-      : super(
-          settings: settings, 
-          title: 'Alimentation', 
-          pages: [
-            Page(title: 'Page 1', buildPage: () => Text('Contenu de la page 1')),
-            Page(title: 'Page 2', buildPage: () => Text('Contenu de la page 2')),
-            // Ajoutez d'autres pages ici
-          ],
-        );
-
-  static Widget _buildAlimentationPage(String pageTitle) {
-    return Container(
-      // Utilisez la couleur appropriée pour la section Alimentation
-      child: Center(
-        child: Text('Contenu de la section Alimentation - $pageTitle'),
-      ),
+    : super(
+      settings: settings, 
+      title: 'Alimentation', 
+      pages: [
+        Page(title: 'Nutrition', buildPage: () => NutritionPage(settings: settings)),
+        // Ajoutez d'autres pages ici
+      ],
     );
-  }
 }
 
 class ProfilePage extends StatelessWidget {
@@ -391,11 +372,77 @@ class Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
+    return Padding(
+      padding: const EdgeInsets.all(0.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headline5?.copyWith(
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(height: 16.0), // Espacement entre le titre et le contenu
+          child, // Ici, le 'child' ne sera pas englobé par un widget supplémentaire
+        ],
       ),
-      body: child,
     );
   }
 }
+
+
+
+class NutritionPage extends StatelessWidget {
+  final Settings settings;
+
+  NutritionPage({required this.settings});
+
+  @override
+  Widget build(BuildContext context) {
+    // Information nutritionnelle à afficher. À remplacer par des données réelles.
+    var data = {
+      'Calories': 500,
+      'Glucides': 100,
+      'Lipides': 50,
+      'Protéines': 200,
+    };
+
+    var children = data.entries.map((entry) {
+      return Column(
+        children: <Widget>[
+          Text('${entry.key} (${entry.value})', style: TextStyle(color: Colors.white)),
+          SizedBox(height: 20),
+          LinearProgressIndicator(
+            value: entry.value / 1000, // Conversion en un nombre compris entre 0 et 1
+            backgroundColor: Colors.white,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+          ),
+          SizedBox(height: 20),
+        ],
+      );
+    }).toList();
+
+    return Content(
+      title: "Nutrition",
+      child: Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              settings.backGroundPrimaryColor,
+              settings.backGroundSecondaryColor,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Column(
+          children: children,
+        ),
+      ),
+    );
+  }
+}
+
+
