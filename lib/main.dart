@@ -225,6 +225,11 @@ class _HomePageState extends State<HomePage> {
       'subtitle': 'Stay healthy',
       'gradientColors': [Color(0xFF60BE93), Color(0xFF1B8D59), Color(0xFF00FFFF)]
     },
+    {
+      'title': 'Add new section',
+      'subtitle': 'Coming soon',
+      'gradientColors': [Color(0xFF60BE93), Color(0xFF1B8D59), Color(0xFF00FFFF)]
+    },
   ];
 
   @override
@@ -266,6 +271,8 @@ class _HomePageState extends State<HomePage> {
         return SportSection(settings: widget.settings);
       case 'Alimentation':
         return AlimentationSection(settings: widget.settings);
+      case 'Add new section':
+        return AddMoreSection(settings: widget.settings);
       default:
         return Center(child: Text('Page non trouvée'));
     }
@@ -336,6 +343,19 @@ class SportSection extends BaseSectionPage {
         );
 }
 
+class AddMoreSection extends BaseSectionPage {
+  AddMoreSection({required Settings settings})
+      : super(
+          settings: settings, 
+          title: 'Add new section', 
+          pages: [
+            Page(title: 'Santé', buildPage: () => Text('Contenu de la page 1')),
+            Page(title: 'Bien-etre', buildPage: () => Text('Contenu de la page 2')),
+            Page(title: 'Art', buildPage: () => Text('Contenu de la page 3')),
+          ],
+        );
+}
+
 class AlimentationSection extends BaseSectionPage {
   AlimentationSection({required Settings settings})
     : super(
@@ -347,6 +367,8 @@ class AlimentationSection extends BaseSectionPage {
       ],
     );
 }
+
+//add more section here
 
 class ProfilePage extends StatelessWidget {
   final Settings settings;
@@ -361,38 +383,6 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-class Content extends StatelessWidget {
-  final String title;
-  final Widget child;
-
-  Content({
-    required this.title,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(0.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.headline5?.copyWith(
-              color: Colors.white,
-            ),
-          ),
-          SizedBox(height: 16.0), // Espacement entre le titre et le contenu
-          child, // Ici, le 'child' ne sera pas englobé par un widget supplémentaire
-        ],
-      ),
-    );
-  }
-}
-
-
-
 class NutritionPage extends StatelessWidget {
   final Settings settings;
 
@@ -400,45 +390,48 @@ class NutritionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Information nutritionnelle à afficher. À remplacer par des données réelles.
-    var data = {
-      'Calories': 500,
-      'Glucides': 100,
-      'Lipides': 50,
-      'Protéines': 200,
-    };
-
-    var children = data.entries.map((entry) {
-      return Column(
-        children: <Widget>[
-          Text('${entry.key} (${entry.value})', style: TextStyle(color: Colors.white)),
-          SizedBox(height: 20),
-          LinearProgressIndicator(
-            value: entry.value / 1000, // Conversion en un nombre compris entre 0 et 1
-            backgroundColor: Colors.white,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-          ),
-          SizedBox(height: 20),
-        ],
-      );
-    }).toList();
-
-    return Content(
-      title: "Nutrition",
-      child: Container(
-        padding: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              settings.backGroundPrimaryColor,
-              settings.backGroundSecondaryColor,
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+    return Scaffold(
+      backgroundColor: settings.backGroundPrimaryColor, // Définit la couleur de fond de la page
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: children,
+          children: <Widget>[
+            Content(
+              settings: settings,
+              title: "Calories",
+              child: GradientProgressBar(
+                percentage: 0.25, 
+                gradientColors: [Colors.red, Colors.orange, Colors.yellow, Colors.green],
+              ),
+            ),
+            SizedBox(height: 20),
+            Content(
+              settings: settings,
+              title: "Protéines",
+              child: GradientProgressBar(
+                percentage: 0.4, 
+                gradientColors: [Colors.red, Colors.orange, Colors.yellow, Colors.green],
+              ),
+            ),
+            SizedBox(height: 20),
+            Content(
+              settings: settings,
+              title: "Lipides",
+              child: GradientProgressBar(
+                percentage: 0.6, 
+                gradientColors: [Colors.red, Colors.orange, Colors.yellow, Colors.green],
+              ),
+            ),
+            SizedBox(height: 20),
+            Content(
+              settings: settings,
+              title: "Sucres",
+              child: GradientProgressBar(
+                percentage: 0.8, 
+                gradientColors: [Colors.red, Colors.orange, Colors.yellow, Colors.green],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -446,3 +439,77 @@ class NutritionPage extends StatelessWidget {
 }
 
 
+class GradientProgressBar extends StatelessWidget {
+  final double percentage;
+  final List<Color> gradientColors;
+
+  GradientProgressBar({
+    required this.percentage, 
+    required this.gradientColors,
+  });
+
+  Color? determineColor(double percentage) {
+    assert(gradientColors.length >= 2, 'You should provide at least 2 colors.');
+
+    double segment = 1 / (gradientColors.length - 1);
+    int index = (percentage / segment).floor();
+    
+    if (index >= gradientColors.length - 1) {
+      return gradientColors.last;
+    } 
+
+    Color startColor = gradientColors[index];
+    Color endColor = gradientColors[index + 1];
+    
+    double localPercentage = (percentage - (index * segment)) / segment;
+    
+    return Color.lerp(startColor, endColor, localPercentage);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 10.0,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        color: Colors.grey.shade300, // background color
+      ),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          height: 10.0,
+          width: MediaQuery.of(context).size.width * percentage,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            color: determineColor(percentage),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Content extends StatelessWidget {
+  final Settings settings;
+  
+  final String title;
+  final Widget child;
+
+  Content({required this.settings, required this.title, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          title,
+          style: TextStyle(color: settings.foreGroundSecondaryColor, fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        child,
+      ],
+    );
+  }
+}
