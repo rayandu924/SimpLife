@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'settings.dart';
-import 'homePage.dart';
+import 'mainPage.dart';
 
 class App extends StatelessWidget {
   final Settings settings;
@@ -12,9 +12,9 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'SimpLife',
       theme: ThemeData(
-        canvasColor: Colors.transparent, // Ajouter cette ligne
+        canvasColor: Colors.transparent,
       ),
-      home: HomePage(settings: settings),
+      home: MainPage(settings: settings),
     );
   }
 }
