@@ -27,11 +27,11 @@ class MyCustomUI extends StatefulWidget {
   _MyCustomUIState createState() => _MyCustomUIState();
 }
 
-class _MyCustomUIState extends State<MyCustomUI>
-    with SingleTickerProviderStateMixin {
+class _MyCustomUIState extends State<MyCustomUI> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   late Animation<double> _animation2;
+  late TabController _tabController;
 
   @override
   void initState() {
@@ -52,13 +52,14 @@ class _MyCustomUIState extends State<MyCustomUI>
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
     _controller.forward();
-    _controller.forward();
+
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _controller.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -75,7 +76,7 @@ class _MyCustomUIState extends State<MyCustomUI>
                 BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(_w / 17, _w / 20, 0, _w / 10),
+                padding: EdgeInsets.fromLTRB(_w / 17, _w / 20, 0, _w / 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -89,7 +90,7 @@ class _MyCustomUIState extends State<MyCustomUI>
                     ),
                     SizedBox(height: _w / 35),
                     Text(
-                      'Here you can write something\nabout your app.',
+                      'Here you can write something.',
                       style: TextStyle(
                         fontSize: 19,
                         color: Colors.black.withOpacity(.5),
@@ -97,6 +98,17 @@ class _MyCustomUIState extends State<MyCustomUI>
                       ),
                       textAlign: TextAlign.start,
                     ),
+                    TabBar(
+                      controller: _tabController,
+                      tabs: [
+                        Tab(
+                          text: "Tab 1",
+                        ),
+                        Tab(
+                          text: "Tab 2",
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
