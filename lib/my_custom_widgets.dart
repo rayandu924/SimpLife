@@ -47,10 +47,13 @@ static Widget sectionPage(BuildContext context) {
           padding: const EdgeInsets.all(10.0),
           child: recursiveCircularIndicator(
             context,
-            [0.9, 0.7, 0.4],
+            [
+              {"percent": 0.9, "color": Colors.red},
+              {"percent": 0.7, "color": Colors.green},
+              {"percent": 0.4, "color": Colors.blue},
+            ],
             initialRadius: 200.0,
-            finalChild: Text('0\n0\n0', style: TextStyle(color: foregroundSecondaryColor, fontWeight: FontWeight.bold),),
-          ),
+          )
         )
       ],
     ),
@@ -143,7 +146,7 @@ static Widget myGridList(BuildContext context) {
 }
 
 
-static Widget circularPercentIndicator(BuildContext context, double percent, {double radius = 100.0, Widget childBody = const SizedBox()}) {
+static Widget circularPercentIndicator(BuildContext context, Map<String, dynamic> percentColor, {double radius = 100.0, Widget childBody = const SizedBox()}) {
   double _w = MediaQuery.of(context).size.width;
   return Container(
     width: _w / 2.5,
@@ -151,32 +154,41 @@ static Widget circularPercentIndicator(BuildContext context, double percent, {do
       radius: radius,
       lineWidth: 10.0,
       animation: true,
-      percent: percent, // Indicate the progress here
+      percent: percentColor["percent"], // Indicate the progress here
       circularStrokeCap: CircularStrokeCap.round,
-      progressColor: foregroundSecondaryColor,
-      backgroundColor: foregroundSecondaryColor.withOpacity(0.4),
+      progressColor: percentColor["color"],
+      backgroundColor: percentColor["color"].withOpacity(0.4),
       center: childBody,
     )
   );
 }
-static Widget recursiveCircularIndicator(BuildContext context, List<double> percents, {double initialRadius = 100.0, Widget finalChild = const SizedBox()}) {
+
+static Widget recursiveCircularIndicator(BuildContext context, List<Map<String, dynamic>> percentColors, {double initialRadius = 100.0, Widget finalChild = const SizedBox()}) {
   // Condition d'arrêt de la récursion.
-  if (percents.isEmpty) {
+  if (percentColors.isEmpty) {
     return finalChild;
   }
 
   // Extract the first percentage and create a copy of the list without it.
-  double percent = percents.first;
-  List<double> remainingPercents = percents.sublist(1);
+  Map<String, dynamic> percentColor = percentColors.first;
+  List<Map<String, dynamic>> remainingPercentColors = percentColors.sublist(1);
+
+  // Generate the text for the percentage if finalChild is not provided
+  if (finalChild is SizedBox) {
+    finalChild = Text(
+      percentColors.map((e) => (e["percent"] * 100).toInt().toString()).join('\n'),
+      style: TextStyle(color: foregroundSecondaryColor, fontWeight: FontWeight.bold, fontSize: 30.0),
+      textAlign: TextAlign.center,
+    );
+  }
 
   return Stack(
     alignment: Alignment.center,
     children: [
-      circularPercentIndicator(context, percent, radius: initialRadius),
-      recursiveCircularIndicator(context, remainingPercents, initialRadius: initialRadius - 30.0, finalChild: finalChild)
+      circularPercentIndicator(context, percentColor, radius: initialRadius),
+      recursiveCircularIndicator(context, remainingPercentColors, initialRadius: initialRadius - 30.0, finalChild: finalChild)
     ],
   );
 }
-
 
 }
