@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'my_custom_ui.dart';
+import 'settings.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -8,7 +9,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
       ),
-      home: MyCustomUI(),
+      home: DefaultTextStyle(
+        style: TextStyle(
+          color: foregroundPrimaryColor,
+          fontFamily: 'San Francisco / SF Pro Text',
+          fontWeight: FontWeight.bold,
+        ),
+        child: MyCustomUI(),
+      ),
     );
   }
 }

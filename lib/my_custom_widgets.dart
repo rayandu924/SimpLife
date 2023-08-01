@@ -38,11 +38,9 @@ class MyCustomWidgets {
       ]);
   }
 
-static Widget sectionPage(BuildContext context) {
-  return SafeArea(
-    child: Column(
+  static Widget sectionPage(BuildContext context) {
+    return Column(
       children: [
-        myAppBar(context),
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: recursiveCircularIndicator(
@@ -52,13 +50,23 @@ static Widget sectionPage(BuildContext context) {
               {"percent": 0.7, "color": Colors.green},
               {"percent": 0.4, "color": Colors.blue},
             ],
-            initialRadius: 200.0,
-          )
-        )
+            initialRadius: 250.0,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: linearPercentIndicator(
+            context,
+            [
+              {"percent": 0.9, "color": Colors.red, "title": "Red: "},
+              {"percent": 0.7, "color": Colors.green, "title": "Green: "},
+              {"percent": 0.4, "color": Colors.blue, "title": "Blue: "},
+            ],
+          ),
+        ),
       ],
-    ),
-  );
-}
+    );
+  }
 
 
 static Widget myAppBar(BuildContext context) {
@@ -69,7 +77,7 @@ static Widget myAppBar(BuildContext context) {
       padding: const EdgeInsets.all(8.0),
       child: Navigator.canPop(context)
         ? IconButton(
-            icon: Icon(Icons.arrow_back, color: const Color.fromARGB(255, 255, 255, 255)),
+            icon: Icon(Icons.arrow_back, color: foregroundPrimaryColor),
             onPressed: () => Navigator.pop(context),
           )
         : Container(),  // Empty container if there's no previous page.
@@ -157,37 +165,83 @@ static Widget circularPercentIndicator(BuildContext context, Map<String, dynamic
       percent: percentColor["percent"], // Indicate the progress here
       circularStrokeCap: CircularStrokeCap.round,
       progressColor: percentColor["color"],
-      backgroundColor: percentColor["color"].withOpacity(0.4),
+      backgroundColor: percentColor["color"].withOpacity(0.49),
       center: childBody,
     )
   );
 }
 
-static Widget recursiveCircularIndicator(BuildContext context, List<Map<String, dynamic>> percentColors, {double initialRadius = 100.0, Widget finalChild = const SizedBox()}) {
+static Widget recursiveCircularIndicator(BuildContext context, List<Map<String, dynamic>> percentColors, {double initialRadius = 100.0, List<Widget> texts = const <Widget>[]}) {
   // Condition d'arrêt de la récursion.
   if (percentColors.isEmpty) {
-    return finalChild;
+    return Center(
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 30.0), // Adjust the padding here.
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: texts,
+          ),
+        ),
+      ),
+    );
   }
 
   // Extract the first percentage and create a copy of the list without it.
   Map<String, dynamic> percentColor = percentColors.first;
   List<Map<String, dynamic>> remainingPercentColors = percentColors.sublist(1);
 
-  // Generate the text for the percentage if finalChild is not provided
-  if (finalChild is SizedBox) {
-    finalChild = Text(
-      percentColors.map((e) => (e["percent"] * 100).toInt().toString()).join('\n'),
-      style: TextStyle(color: foregroundSecondaryColor, fontWeight: FontWeight.bold, fontSize: 30.0),
-      textAlign: TextAlign.center,
-    );
-  }
+  // Calculate font size based on the initial radius
+  double fontSize = initialRadius / 4.5;  // Change this divisor to adjust font size
 
-  return Stack(
-    alignment: Alignment.center,
-    children: [
-      circularPercentIndicator(context, percentColor, radius: initialRadius),
-      recursiveCircularIndicator(context, remainingPercentColors, initialRadius: initialRadius - 30.0, finalChild: finalChild)
-    ],
+  // Add a new text widget for the current circle
+  texts = [
+    ...texts,
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 0.0),
+      child: Text(
+        (percentColor["percent"] * 100).toInt().toString(),
+        style: TextStyle(color: percentColor["color"], fontSize: fontSize, fontWeight: FontWeight.bold),
+      ),
+    )
+  ];
+
+  // Create the child widget for the next recursive call
+  Widget child = recursiveCircularIndicator(context, remainingPercentColors, initialRadius: initialRadius - 30.0, texts: texts);
+
+  return circularPercentIndicator(context, percentColor, radius: initialRadius, childBody: child);
+}
+
+
+static Widget linearPercentIndicator(BuildContext context, List<Map<String, dynamic>> data) {
+  return Column(
+    children: data.map((item) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,  // Centre le contenu
+          children: [
+            Center(  // Centre le Text widget
+              child: Text(
+                item["title"] + (item["percent"] * 100).toInt().toString() + "%",
+                style: TextStyle(color: item["color"], fontSize: 24.0),
+              ),
+            ),
+            Padding(  // Ajoute un espacement entre le texte et la barre
+              padding: const EdgeInsets.only(top: 8.0),
+              child: LinearPercentIndicator(
+                width: MediaQuery.of(context).size.width - 50,
+                lineHeight: 20.0,
+                percent: item["percent"],
+                backgroundColor: item["color"].withOpacity(0.49),
+                progressColor: item["color"],
+              ),
+            ),
+          ],
+        ),
+      );
+    }).toList(),
   );
 }
 
