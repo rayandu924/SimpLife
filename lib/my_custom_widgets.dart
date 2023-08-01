@@ -58,9 +58,9 @@ class MyCustomWidgets {
           child: linearPercentIndicator(
             context,
             [
-              {"percent": 0.9, "color": Colors.red, "title": "Red: "},
-              {"percent": 0.7, "color": Colors.green, "title": "Green: "},
-              {"percent": 0.4, "color": Colors.blue, "title": "Blue: "},
+              {"percent": 0.9, "color": Colors.red, "title": "Red"},
+              {"percent": 0.7, "color": Colors.green, "title": "Green"},
+              {"percent": 0.4, "color": Colors.blue, "title": "Blue"},
             ],
           ),
         ),
