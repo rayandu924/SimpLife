@@ -38,12 +38,13 @@ class MyCustomWidgets {
       ]);
   }
 
-  static Widget sectionPage(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: recursiveCircularIndicator(
+static Widget sectionPage(BuildContext context) {
+  return Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: widgetWithLegend(
+          recursiveCircularIndicator(
             context,
             [
               {"percent": 0.9, "color": Colors.red},
@@ -52,21 +53,36 @@ class MyCustomWidgets {
             ],
             initialRadius: 250.0,
           ),
+          Text(
+            'Legend for Recursive Circular Indicator', // Replace this with the actual legend.
+            style: TextStyle(fontSize: 16.0), // Adjust the style as you wish.
+            textAlign: TextAlign.center,
+          ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: linearPercentIndicator(
+      ),
+      Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: widgetWithLegend( 
+          linearPercentIndicator(
             context,
             [
-              {"percent": 0.9, "color": Colors.red, "title": "Red"},
-              {"percent": 0.7, "color": Colors.green, "title": "Green"},
               {"percent": 0.4, "color": Colors.blue, "title": "Blue"},
             ],
           ),
+          Text(
+            'Progres', // Replace this with the actual legend.
+            style: TextStyle(fontSize: 16.0), // Adjust the style as you wish.
+            textAlign: TextAlign.center,
+          ),
         ),
-      ],
-    );
-  }
+      ),
+      roundedBorderContainer(context, Color.fromARGB(255, 0, 81, 201), width: MediaQuery.of(context).size.width, height: 100, children: [
+        Text("Hello World"),
+      ]),
+    ],
+  );
+}
+
 
 
 static Widget myAppBar(BuildContext context) {
@@ -213,36 +229,66 @@ static Widget recursiveCircularIndicator(BuildContext context, List<Map<String, 
   return circularPercentIndicator(context, percentColor, radius: initialRadius, childBody: child);
 }
 
-
 static Widget linearPercentIndicator(BuildContext context, List<Map<String, dynamic>> data) {
   return Column(
-    children: data.map((item) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,  // Centre le contenu
-          children: [
-            Center(  // Centre le Text widget
-              child: Text(
-                item["title"] + (item["percent"] * 100).toInt().toString() + "%",
-                style: TextStyle(color: item["color"], fontSize: 24.0),
-              ),
-            ),
-            Padding(  // Ajoute un espacement entre le texte et la barre
-              padding: const EdgeInsets.only(top: 8.0),
-              child: LinearPercentIndicator(
-                width: MediaQuery.of(context).size.width - 50,
-                lineHeight: 20.0,
-                percent: item["percent"],
-                backgroundColor: item["color"].withOpacity(0.49),
-                progressColor: item["color"],
-              ),
-            ),
-          ],
-        ),
-      );
-    }).toList(),
+    children: [
+      ...data.map((item) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,  // Centre le contenu
+            children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child:
+                  LinearPercentIndicator(
+                    lineHeight: 12.0,
+                    percent: item["percent"],
+                    backgroundColor: item["color"].withOpacity(0.49),
+                    progressColor: item["color"],
+                  ),
+                ),
+            ],
+          ),
+        );
+      }).toList(),
+    ],
   );
 }
+
+static Widget widgetWithLegend(Widget mainWidget, Widget legend) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      mainWidget,
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.0),  // You can adjust this value to increase/decrease the space between the main widget and its legend.
+        child: legend,
+      ),
+    ],
+  );
+}
+
+static Widget roundedBorderContainer(BuildContext context, Color backgroundColor, {double? width, double? height, List<Widget>? children}) {
+  return Container(
+    width: width,
+    height: height,
+    decoration: BoxDecoration(
+      color: backgroundColor, // Use backgroundColor here
+      border: Border.all(
+        color: Colors.black, // Change this if you want a different border color
+      ),
+      borderRadius: BorderRadius.circular(15), // Change this to adjust the roundness of border
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(16.0), // Change this to adjust the inner spacing
+      child: Column(
+        children: children ?? <Widget>[],  // Will be empty if children is null
+      ),
+    ),
+  );
+}
+
+
 
 }
