@@ -65,27 +65,7 @@ class GFListTile extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              // Action button
-              Positioned(
-                top: 8, // Adjust the position as needed
-                right: 8, // Adjust the position as needed
-                child: Opacity(
-                  opacity: 0.2,
-                  child: SizedBox(
-                    width: 32,
-                    height: 32,
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        // Handle the action button tap event here
-                      },
-                      backgroundColor: Colors.blue,
-                      child: Icon(Icons.info),
-                    ),
-                  ),
-                ),
-              ),
-
-              // Presentation widget
+              actionButton ?? Container(),
               Center(
                 child: presentation ?? Container(),
               ),
