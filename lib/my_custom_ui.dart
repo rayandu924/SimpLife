@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:myway/settings.dart';
+import 'settings.dart';
 import 'dart:ui';
 import 'my_custom_widgets.dart';
 
