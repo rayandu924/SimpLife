@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'widgets.dart';
 
 void main() {
@@ -162,10 +161,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             ),
         Flexible(
           flex: 1, // The other 50% will be empty in this case
-          child: lineChart(
+          child: 
+          tile(
+            contentPadding: const EdgeInsets.fromLTRB(0, 20, 10, 0),
+            backgroundColor: Colors.red,
+            contentChild:           lineChart(
             data: lineChartData(
       lineBarsData: [
-        LineChartBarData(
+        lineChartBarData(
           spots: [
             FlSpot(0, 1),
             FlSpot(1, 3),
@@ -173,14 +176,39 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             FlSpot(3, 1.5),
             FlSpot(4, 2.5),
           ],
-          isCurved: true,
-          barWidth: 4,
-          isStrokeCapRound: true,
-          belowBarData: BarAreaData(show: false),
-        )
+
+          belowBarData: BarAreaData(show: true, gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.red, Colors.green])),
+        ).build(),
       ],
-      titlesData: FlTitlesData(show: true),
+      titlesData: lineChartTitlesData(
+        show: true,
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 42,
+            interval: 1,
+            getTitlesWidget: lineChartTitlesWidget(
+              titles: ['10K', '90K'],
+               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+              gapsBetweenTitles: 2,
+            ).getTitlesWidget,
+          ),
+        ),
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: 1,
+            getTitlesWidget: lineChartTitlesWidget(
+              titles: ['10K', '30K', '50K', '70K', '90K'],
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+              gapsBetweenTitles: 2,
+            ).getTitlesWidget,
+            reservedSize: 42,
+          ),
+        ),
+      ).build(),
     ).build(),
+          ),
           ),
         ),
       ],
