@@ -119,14 +119,20 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             ),
             tile(
               backgroundColor: Colors.orange,
-              contentChild: progressBar(
-                percentage: 0.5,
-                width: 100,
-                type: progressBarType.circular,
-                progressBarColor: Colors.red,
-                backgroundColor: Colors.grey,
-                lineHeight: 15.0,
-              ),
+              contentChild:presentationTile(
+                        type: presentationType.basic,
+                        children: [
+                          Text('Title', style: Title1.copyWith(color: Colors.black)),
+                          progressBar(
+                            percentage: 0.5,
+                            width: 45,
+                            type: progressBarType.circular,
+                            progressBarColor: Colors.red,
+                            backgroundColor: Colors.grey,
+                            lineHeight: 10.0,
+                          ),
+                        ],
+                      ),
             ),
           ],
         );
@@ -163,18 +169,18 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           flex: 1, // The other 50% will be empty in this case
           child: 
           tile(
-            contentPadding: const EdgeInsets.fromLTRB(0, 20, 10, 0),
+            contentPadding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
             backgroundColor: Colors.red,
             contentChild:           lineChart(
             data: lineChartData(
       lineBarsData: [
         lineChartBarData(
           spots: [
-            FlSpot(0, 1),
-            FlSpot(1, 3),
-            FlSpot(2, 4),
-            FlSpot(3, 1.5),
-            FlSpot(4, 2.5),
+            FlSpot(0, -1),
+            FlSpot(1, 0),
+            FlSpot(1.5, 0.2),
+            FlSpot(2, 1),
+            FlSpot(12, 5),
           ],
 
           belowBarData: BarAreaData(show: true, gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.red, Colors.green])),
@@ -188,10 +194,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             reservedSize: 42,
             interval: 1,
             getTitlesWidget: lineChartTitlesWidget(
-              titles: ['10K', '90K'],
-               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+              titles: Months,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               gapsBetweenTitles: 2,
-            ).getTitlesWidget,
+              isLooped: true,
+            ).getTitlesWidgetDefault,
           ),
         ),
         leftTitles: AxisTitles(
@@ -199,10 +206,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             showTitles: true,
             interval: 1,
             getTitlesWidget: lineChartTitlesWidget(
-              titles: ['10K', '30K', '50K', '70K', '90K'],
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               gapsBetweenTitles: 2,
-            ).getTitlesWidget,
+            ).getTitlesWidgetInteger,
             reservedSize: 42,
           ),
         ),

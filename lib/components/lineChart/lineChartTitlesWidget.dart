@@ -5,16 +5,21 @@ class lineChartTitlesWidget {
   final TextStyle style;
   final int gapsBetweenTitles;
   final TextAlign textAlign;
+  final bool isLooped;
 
   lineChartTitlesWidget({
-    required this.titles,
-    required this.style,
+    this.titles = const ['ERROR'],
+    this.style = Title1,
     this.gapsBetweenTitles = 1,
-    this.textAlign = TextAlign.left,
+    this.textAlign = TextAlign.center,
+    this.isLooped = false, // variable ajoutée
   });
 
-  Widget getTitlesWidget(double value, TitleMeta meta) {
+  Widget getTitlesWidgetDefault(double value, TitleMeta meta) {
     int index = value.toInt();
+    if (isLooped) {
+      index = index % titles.length; // boucler à travers les titres
+    }
     if (index >= 0 && index < titles.length) {
       return Center(
         child: Text(
@@ -26,5 +31,15 @@ class lineChartTitlesWidget {
     }
     return Container();
   }
-}
 
+  Widget getTitlesWidgetInteger(double value, TitleMeta meta) {
+    int index = value.toInt();
+    return Center(
+      child: Text(
+        index.toString(),
+        style: style,
+        textAlign: textAlign,
+      ),
+    );
+  }
+}

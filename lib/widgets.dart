@@ -20,3 +20,4 @@ export 'components/lineChart/lineChartData.dart';
 export 'components/lineChart/lineChartTitlesData.dart';
 export 'components/lineChart/lineChartTitlesWidget.dart';
 export 'components/lineChart/lineChartBarData.dart';
+export 'components/presentation/presentationTile.dart';
