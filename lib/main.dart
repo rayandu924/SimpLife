@@ -22,7 +22,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   final Key tabBarKey = UniqueKey();
   late TabController _tabController;
   final List<Widget> tabList = [
-    const Text('Tab1'),
+    Container(
+      child : Text('Home'),
+    ),
     const Tab(icon: Icon(Icons.favorite)),
     Tab(
       icon: Icon(Icons.directions_railway),
@@ -80,9 +82,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         children: [
           buildGridView(), // Contenu de la première tab
           buildProgressBarColumn(), // Contenu de la deuxième tab
-          Center(
-            child: Text('Tab 3 Content'),
-          ),
+          buildMoreWidgets(), // Contenu de la troisième tab
         ],
       ),
       bottomNavigationBar: tabBarr,
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           mainAxisSpacing: 0,
           padding: EdgeInsets.zero,
           children: [
-            content(
+            presentationContent(
               title: Text('Title', style: Title1.copyWith(color: Colors.black)),
               titlePosition: TitlePosition.below,
               titleAlignment: Alignment.center,
@@ -144,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       children: [
         Flexible(
           flex: 1, // This ensures that the content will take up 50% of its parent's height
-          child: content(
+          child: presentationContent(
             title: Text('Title', style: Title1.copyWith(color: Colors.black)),
             titlePosition: TitlePosition.below,
             titleAlignment: Alignment.center,
@@ -215,6 +215,39 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       ).build(),
     ).build(),
           ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildMoreWidgets() {
+    return Flex(
+      direction: Axis.vertical,
+      children: [
+        Flexible(
+          flex: 1, // This ensures that the content will take up 50% of its parent's height
+          child: carousel(
+            children : [
+              tile(
+                backgroundColor: Colors.red,
+              ),
+              tile(
+                backgroundColor: Colors.blue,
+              ),
+              tile(
+                backgroundColor: Colors.green,
+              ),
+            ],
+            activeIndicatorColor: Colors.red,
+            inactiveIndicatorColor: Colors.blue,
+          )
+
+        ),
+        Flexible(
+          flex: 1, // The other 50% will be empty in this case
+          child: tile(
+            backgroundColor: Colors.red,
           ),
         ),
       ],

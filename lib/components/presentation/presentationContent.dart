@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 enum TitlePosition { above, below }
 
-class content extends StatelessWidget {
+class presentationContent extends StatelessWidget {
   final Widget title;
   final Widget child;
   final TitlePosition titlePosition;
   final Alignment titleAlignment;
 
-  content({
+  presentationContent({
     required this.title,
     required this.child,
     this.titlePosition = TitlePosition.above,
