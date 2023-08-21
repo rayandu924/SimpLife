@@ -1,50 +1,36 @@
 import '../../widgets.dart';
 
-enum presentationType { basic }
-
 class presentationTile extends StatelessWidget {
-  final presentationType type;
-  final List<Widget> children;
+  final Widget content;
+  final Widget button;
 
   presentationTile({
-    required this.type,
-    required this.children,
+    required this.button,
+    required this.content,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    Widget tile;
-
-    switch (type) {
-      case presentationType.basic:
-        tile = basicPresentationTile(children: children);
-        break;
-      default:
-        tile = basicPresentationTile(children: children);
-    }
-
-    return tile;
-  }
-
-  Widget basicPresentationTile({required List<Widget> children}) {
-    return Stack(
-      children: [
-        Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                padding: EdgeInsets.only(left: 6, bottom: 6),
-                child: children[0],
-              ),
-            ),
-        Align(
-          alignment: Alignment.topRight,
-          child: Container(
-            padding: EdgeInsets.only(right: 6, top: 6),
-            child: children[1],
-          ),
+@override
+Widget build(BuildContext context) {
+  return Stack(
+    children: [
+      // Centrer le contenu
+      Align(
+        alignment: Alignment.center,
+        child: Container(
+          padding: EdgeInsets.all(0),
+          child: content,
         ),
-      ],
-    );
-  }
+      ),
+      // Positionner le bouton en haut à gauche
+      Align(
+        alignment: Alignment.topRight,
+        child: Container(
+          padding: EdgeInsets.only(right: 6, top: 6),
+          child: button,
+        ),
+      ),
+    ],
+  );
 }
 
+}

@@ -20,6 +20,8 @@ export 'components/lineChart/lineChartData.dart';
 export 'components/lineChart/lineChartTitlesData.dart';
 export 'components/lineChart/lineChartTitlesWidget.dart';
 export 'components/lineChart/lineChartBarData.dart';
+export 'components/lineChart/lineChartBuilder.dart';
 export 'components/presentation/presentationTile.dart';
 export 'components/presentation/presentationContent.dart';
+export 'components/presentation/presentationLineChartWeight.dart';
 export 'components/carousel/carousel.dart';

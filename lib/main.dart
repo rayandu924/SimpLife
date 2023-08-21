@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   late TabController _tabController;
   final List<Widget> tabList = [
     Container(
-      child : Text('Home'),
+      child: Text('Home'),
     ),
     const Tab(icon: Icon(Icons.favorite)),
     Tab(
@@ -91,51 +91,49 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   Widget buildGridView() {
     return GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 0.88,
-          crossAxisSpacing: 0,
-          mainAxisSpacing: 0,
-          padding: EdgeInsets.zero,
-          children: [
-            presentationContent(
-              title: Text('Title', style: Title1.copyWith(color: Colors.black)),
-              titlePosition: TitlePosition.below,
-              titleAlignment: Alignment.center,
-              child: tile(
-                backgroundColor: Colors.red,
+      crossAxisCount: 2,
+      childAspectRatio: 0.88,
+      crossAxisSpacing: 0,
+      mainAxisSpacing: 0,
+      padding: EdgeInsets.zero,
+      children: [
+        presentationContent(
+          title: Text('Title', style: Title1.copyWith(color: Colors.black)),
+          titlePosition: presentationContentType.below,
+          titleAlignment: Alignment.center,
+          child: tile(
+            backgroundColor: Colors.red,
+          ),
+        ),
+        tile(
+          backgroundColor: Colors.red,
+        ),
+        tile(
+          backgroundColor: Colors.red,
+        ),
+        tile(
+          backgroundColor: Colors.orange,
+          borderRadius: 30,
+          shadowColor: Colors.blue,
+          elevation: 8,
+        ),
+        tile(
+          backgroundColor: Colors.orange,
+          contentChild: presentationTile(
+            content: 
+              progressBar(
+                percentage: 0.5,
+                width: 100,
+                type: progressBarType.circular,
+                progressBarColor: const Color.fromARGB(255, 54, 244, 101),
+                backgroundColor: Colors.grey,
+                lineHeight: 10.0,
               ),
-            ),
-            tile(
-              backgroundColor: Colors.red,
-            ),
-            tile(
-              backgroundColor: Colors.red,
-            ),
-            tile(
-              backgroundColor: Colors.orange,
-              borderRadius: 30,
-              shadowColor: Colors.blue,
-              elevation: 8,
-            ),
-            tile(
-              backgroundColor: Colors.orange,
-              contentChild:presentationTile(
-                        type: presentationType.basic,
-                        children: [
-                          Text('Title', style: Title1.copyWith(color: Colors.black)),
-                          progressBar(
-                            percentage: 0.5,
-                            width: 45,
-                            type: progressBarType.circular,
-                            progressBarColor: Colors.red,
-                            backgroundColor: Colors.grey,
-                            lineHeight: 10.0,
-                          ),
-                        ],
-                      ),
-            ),
-          ],
-        );
+            button: Icon(Icons.add),
+        ),
+        ),
+      ],
+    );
   }
 
   Widget buildProgressBarColumn() {
@@ -143,78 +141,42 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       direction: Axis.vertical,
       children: [
         Flexible(
-          flex: 1, // This ensures that the content will take up 50% of its parent's height
-          child: presentationContent(
-            title: Text('Title', style: Title1.copyWith(color: Colors.black)),
-            titlePosition: TitlePosition.below,
-            titleAlignment: Alignment.center,
-            child: progressBar(
-                  percentage: 0.5,
-                  width: 120,
-                  type: progressBarType.circular,
-                  progressBarColor: Colors.red,
-                  backgroundColor: Colors.grey,
-                  lineHeight: 15.0,
-                  child: ListView(
-                    children: [
-                      Text("90%", style: Title1.copyWith(color: const Color.fromARGB(255, 0, 0, 0))),
-                      Text("80%", style: Title1.copyWith(color: Colors.red)),
-                      Text("70%", style: Title1.copyWith(color: Colors.red)),
-                    ],
-                  ),
+            flex:
+                1, // This ensures that the content will take up 50% of its parent's height
+            child: presentationContent(
+              title: Text('Title', style: Title1.copyWith(color: Colors.black)),
+              titlePosition: presentationContentType.below,
+              titleAlignment: Alignment.center,
+              child: progressBar(
+                percentage: 0.5,
+                width: 120,
+                type: progressBarType.circular,
+                progressBarColor: Colors.red,
+                backgroundColor: Colors.grey,
+                lineHeight: 15.0,
+                child: ListView(
+                  children: [
+                    Text("90%",
+                        style: Title1.copyWith(
+                            color: const Color.fromARGB(255, 0, 0, 0))),
+                    Text("80%", style: Title1.copyWith(color: Colors.red)),
+                    Text("70%", style: Title1.copyWith(color: Colors.red)),
+                  ],
                 ),
-              )
-            ),
+              ),
+            )),
         Flexible(
           flex: 1, // The other 50% will be empty in this case
-          child: 
-          tile(
+          child: tile(
             contentPadding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
-            backgroundColor: Colors.red,
-            contentChild:           lineChart(
-            data: lineChartData(
-      lineBarsData: [
-        lineChartBarData(
-          spots: [
-            FlSpot(0, -1),
-            FlSpot(1, 0),
-            FlSpot(1.5, 0.2),
-            FlSpot(2, 1),
-            FlSpot(12, 5),
-          ],
-
-          belowBarData: BarAreaData(show: true, gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.red, Colors.green])),
-        ).build(),
-      ],
-      titlesData: lineChartTitlesData(
-        show: true,
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            reservedSize: 42,
-            interval: 1,
-            getTitlesWidget: lineChartTitlesWidget(
-              titles: Months,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              gapsBetweenTitles: 2,
-              isLooped: true,
-            ).getTitlesWidgetDefault,
-          ),
+            backgroundColor: Colors.blueAccent,
+            contentChild: presentationTile(
+            content: presentationLineChart(
+              spots: [FlSpot(0, 10), FlSpot(3, 60),FlSpot(5, 30)],
+              numberOfYIndicators: 4,
+            ),
+            button: Icon(Icons.add),
         ),
-        leftTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            interval: 1,
-            getTitlesWidget: lineChartTitlesWidget(
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              gapsBetweenTitles: 2,
-            ).getTitlesWidgetInteger,
-            reservedSize: 42,
-          ),
-        ),
-      ).build(),
-    ).build(),
-          ),
           ),
         ),
       ],
@@ -226,24 +188,23 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       direction: Axis.vertical,
       children: [
         Flexible(
-          flex: 1, // This ensures that the content will take up 50% of its parent's height
-          child: carousel(
-            children : [
-              tile(
-                backgroundColor: Colors.red,
-              ),
-              tile(
-                backgroundColor: Colors.blue,
-              ),
-              tile(
-                backgroundColor: Colors.green,
-              ),
-            ],
-            activeIndicatorColor: Colors.red,
-            inactiveIndicatorColor: Colors.blue,
-          )
-
-        ),
+            flex:
+                1, // This ensures that the content will take up 50% of its parent's height
+            child: carousel(
+              children: [
+                tile(
+                  backgroundColor: Colors.red,
+                ),
+                tile(
+                  backgroundColor: Colors.blue,
+                ),
+                tile(
+                  backgroundColor: Colors.green,
+                ),
+              ],
+              activeIndicatorColor: Colors.red,
+              inactiveIndicatorColor: Colors.blue,
+            )),
         Flexible(
           flex: 1, // The other 50% will be empty in this case
           child: tile(

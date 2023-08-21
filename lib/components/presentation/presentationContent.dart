@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-enum TitlePosition { above, below }
+enum presentationContentType { above, below }
 
 class presentationContent extends StatelessWidget {
   final Widget title;
   final Widget child;
-  final TitlePosition titlePosition;
+  final presentationContentType titlePosition;
   final Alignment titleAlignment;
 
   presentationContent({
     required this.title,
     required this.child,
-    this.titlePosition = TitlePosition.above,
+    this.titlePosition = presentationContentType.above,
     this.titleAlignment = Alignment.centerLeft,
   });
 
@@ -24,7 +24,7 @@ class presentationContent extends StatelessWidget {
 
     List<Widget> children;
 
-    if (titlePosition == TitlePosition.above) {
+    if (titlePosition == presentationContentType.above) {
       children = [titleWidget, Expanded(child: child)];
     } else {
       children = [Expanded(child: child), titleWidget];
