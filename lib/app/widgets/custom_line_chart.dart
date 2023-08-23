@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:simplife/global.dart';
 
-class lineChartBuilder extends StatelessWidget {
+class custom_line_chart extends StatelessWidget {
   final List<FlSpot> spots;
 
   // GridData attributes
@@ -51,9 +50,9 @@ class lineChartBuilder extends StatelessWidget {
   final double maxY;
 
   // Default values
-  final Widget Function(double, TitleMeta) defaultGetTitlesWidget = (p0, p1) => Center(child: Text(p0.toInt().toString()));
+  final Widget Function(double, TitleMeta) defaultGetTitlesWidget = (value, meta) => Center(child: Text(value.toInt().toString(), style: TextStyle(color: Colors.white)));
 
-  lineChartBuilder({
+  custom_line_chart({
     required this.spots,
     this.showGrid = true,
     this.gridLineColor = const Color(0xff37434d),
@@ -95,16 +94,43 @@ class lineChartBuilder extends StatelessWidget {
       LineChartData(
         gridData: FlGridData(
           show: showGrid,
-          getDrawingHorizontalLine: (value) {
-            return FlLine(
-              color: gridLineColor,
-              strokeWidth: gridLineWidth,
-            );
-          },
-          drawHorizontalLine: drawHorizontalLine,
           horizontalInterval: horizontalInterval,
-          drawVerticalLine: drawVerticalLine,
           verticalInterval: verticalInterval,
+          drawVerticalLine: drawVerticalLine,
+          drawHorizontalLine: drawHorizontalLine,
+        ),
+        borderData: FlBorderData(
+          show: showBorder,
+        ),
+        minX: minX,
+        maxX: maxX,
+        minY: minY,
+        maxY: maxY,
+        titlesData: FlTitlesData(
+          leftTitles: AxisTitles( sideTitles : SideTitles(
+            showTitles: leftTitleShowTitles,
+            getTitlesWidget : defaultGetTitlesWidget,
+            reservedSize: leftTitleReservedSize,
+            interval: leftTitleInterval,
+          )),
+          bottomTitles:  AxisTitles( sideTitles : SideTitles(
+            showTitles: bottomTitleShowTitles,
+            getTitlesWidget : defaultGetTitlesWidget,
+            reservedSize: bottomTitleReservedSize,
+            interval: bottomTitleInterval,
+          )),
+          rightTitles:  AxisTitles( sideTitles : SideTitles(
+            showTitles: rightTitleShowTitles,
+            getTitlesWidget : defaultGetTitlesWidget,
+            reservedSize: rightTitleReservedSize,
+            interval: rightTitleInterval,
+          )),
+          topTitles:  AxisTitles( sideTitles : SideTitles(
+            showTitles: topTitleShowTitles,
+            getTitlesWidget : defaultGetTitlesWidget,
+            reservedSize: topTitleReservedSize,
+            interval: topTitleInterval,
+          )),
         ),
         lineBarsData: [
           LineChartBarData(
@@ -115,45 +141,6 @@ class lineChartBuilder extends StatelessWidget {
             belowBarData: BarAreaData(show: showBelowBarData),
           ),
         ],
-        titlesData: FlTitlesData(
-          leftTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: leftTitleShowTitles,
-              getTitlesWidget: leftTitleGetTitlesWidget ?? defaultGetTitlesWidget,
-              reservedSize: leftTitleReservedSize,
-              interval: leftTitleInterval,
-            ),
-          ),
-          bottomTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: bottomTitleShowTitles,
-              getTitlesWidget: bottomTitleGetTitlesWidget ?? defaultGetTitlesWidget,
-              reservedSize: bottomTitleReservedSize,
-              interval: bottomTitleInterval,
-            ),
-          ),
-          topTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: topTitleShowTitles,
-              getTitlesWidget: topTitleGetTitlesWidget ?? defaultGetTitlesWidget,
-              reservedSize: topTitleReservedSize,
-              interval: topTitleInterval,
-            ),
-          ),
-          rightTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: rightTitleShowTitles,
-              getTitlesWidget: rightTitleGetTitlesWidget ?? defaultGetTitlesWidget,
-              reservedSize: rightTitleReservedSize,
-              interval: rightTitleInterval,
-            ),
-          ),
-        ),
-        borderData: FlBorderData(show: showBorder),
-        minX: minX,
-        maxX: maxX,
-        minY: minY,
-        maxY: maxY,
       ),
     );
   }

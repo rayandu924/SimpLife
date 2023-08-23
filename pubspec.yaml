@@ -12,6 +12,7 @@ dependencies:
   percent_indicator: ^3.4.0
   fl_chart: ^0.63.0
   carousel_slider: ^4.2.1
+  flutter_form_builder: ^9.1.0
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:simplife/global.dart';
 
 enum progressBarType { linear, circular }
 
-class progressBar extends StatelessWidget {
+class custom_progress_bar extends StatelessWidget {
   final double percentage;
   final progressBarType type;
   final Color backgroundColor;
@@ -16,7 +14,7 @@ class progressBar extends StatelessWidget {
   final double lineHeight;
   final Widget? child;
 
-  progressBar({
+  custom_progress_bar({
     required this.percentage,
     this.type = progressBarType.linear,
     this.backgroundColor = const Color(0xFFB8C7CB),

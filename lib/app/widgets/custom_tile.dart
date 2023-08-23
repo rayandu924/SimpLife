@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:simplife/global.dart';
 
-class tile extends StatelessWidget {
-  const tile({
+class custom_tile extends StatelessWidget {
+  const custom_tile({
     Key? key,
     this.backgroundColor,
-    this.contentPadding = const EdgeInsets.all(8),
+    this.contentPadding = const EdgeInsets.all(10),
     this.contentMargin = const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
     this.isEnabled = true,
     this.onTap,

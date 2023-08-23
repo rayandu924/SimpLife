@@ -1,12 +1,16 @@
-import '../../widgets.dart';
+import 'package:simplife/global.dart';
 
-class carousel extends StatefulWidget {
+class custom_carousel_slider extends StatefulWidget {
   final List<Widget> children;
+  final double height;
+  final double viewportFraction;
   final Color activeIndicatorColor;
   final Color inactiveIndicatorColor;
 
-  carousel({
+  custom_carousel_slider({
     required this.children,
+    this.height = 200.0,
+    this.viewportFraction = 0.8,
     this.activeIndicatorColor = Colors.black,
     this.inactiveIndicatorColor = Colors.grey,
   });
@@ -15,7 +19,7 @@ class carousel extends StatefulWidget {
   _CustomCarouselState createState() => _CustomCarouselState();
 }
 
-class _CustomCarouselState extends State<carousel> {
+class _CustomCarouselState extends State<custom_carousel_slider> {
   int _current = 0;
 
   @override
@@ -25,6 +29,8 @@ class _CustomCarouselState extends State<carousel> {
         CarouselSlider(
           items: widget.children,
           options: CarouselOptions(
+              height: widget.height,
+              viewportFraction: widget.viewportFraction,  
               onPageChanged: (index, reason) {
                 setState(() {
                   _current = index;
