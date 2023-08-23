@@ -8,7 +8,7 @@ class custom_line_chart extends StatelessWidget {
   final Color gridLineColor;
   final double gridLineWidth;
   final bool drawHorizontalLine;
-  final double horizontalInterval;
+  double horizontalInterval;
   final bool drawVerticalLine;
   final double verticalInterval;
 
@@ -22,7 +22,8 @@ class custom_line_chart extends StatelessWidget {
   final bool leftTitleShowTitles;
   final Widget Function(double, TitleMeta)? leftTitleGetTitlesWidget;
   final double leftTitleReservedSize;
-  final double leftTitleInterval;
+  double leftTitleInterval;
+  final int leftTitlesNumber;
 
   // Bottom TitlesData attributes
   final bool bottomTitleShowTitles;
@@ -44,10 +45,10 @@ class custom_line_chart extends StatelessWidget {
 
   // BorderData attributes
   final bool showBorder;
-  final double minX;
-  final double maxX;
-  final double minY;
-  final double maxY;
+  double minX;
+  double maxX;
+  double minY;
+  double maxY;
 
   // Default values
   final Widget Function(double, TitleMeta) defaultGetTitlesWidget = (value, meta) => Center(child: Text(value.toInt().toString(), style: TextStyle(color: Colors.white)));
@@ -69,6 +70,7 @@ class custom_line_chart extends StatelessWidget {
     this.leftTitleGetTitlesWidget,
     this.leftTitleReservedSize = 50,
     this.leftTitleInterval = 10,
+    this.leftTitlesNumber = 5,
     this.bottomTitleShowTitles = true,
     this.bottomTitleGetTitlesWidget,
     this.bottomTitleReservedSize = 50,
@@ -85,8 +87,16 @@ class custom_line_chart extends StatelessWidget {
     this.minX = 0,
     this.maxX = 10,
     this.minY = 0,
-    this.maxY = 100,
-  });
+    this.maxY = 10,
+  }) {
+    minX = spots.map((e) => e.x).reduce((a, b) => a < b ? a : b);
+    maxX = spots.map((e) => e.x).reduce((a, b) => a > b ? a : b);
+    minY = spots.map((e) => e.y).reduce((a, b) => a < b ? a : b);
+    maxY = spots.map((e) => e.y).reduce((a, b) => a > b ? a : b);
+
+    leftTitleInterval = (maxY - minY) / (leftTitlesNumber - 1);
+    horizontalInterval = (maxY - minY) / (leftTitlesNumber - 1);
+  }
 
   @override
   Widget build(BuildContext context) {

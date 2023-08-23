@@ -2,13 +2,7 @@ library widgets;
 
 //export flutter
 export 'package:flutter/material.dart';
-
-//export config
-export 'config.dart';
-
-//export dependencies
-
-//export components
+export 'dart:convert';
 
 //app
   //utils
