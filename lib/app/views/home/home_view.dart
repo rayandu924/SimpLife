@@ -14,11 +14,31 @@ class HomeView extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text(model.title),
-            ElevatedButton(
-              onPressed: model.fetchData,
-              child: Text('Charger les données'),
-            ),
+            custom_form(fields: [
+              FieldModel(
+                name: 'Nom',
+                type: 'TextField',
+                isRequired: true,
+              ),
+              FieldModel(
+                name: 'Email',
+                type: 'TextField',
+                isRequired: true,
+              ),
+              FieldModel(
+                name: 'Mot de passe',
+                type: 'TextField',
+                isRequired: true,
+              ),
+              FieldModel(
+                name: 'varvalidatecondition',
+                title: 'J\'accepte les conditions',
+                type: 'Checkbox',
+                isRequired: true,
+              ),
+            ], onSubmit: (formData) {
+              print(formData);
+            }),
           ],
         ),
       ),

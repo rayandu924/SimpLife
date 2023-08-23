@@ -2,13 +2,15 @@ import 'package:simplife/global.dart';
 
 class FieldModel {
   final String name;
-  final String type;
+  final String title;
+  final String? type;
   final bool isRequired;
   final FormFieldValidator? validator; // Ajout de la fonction de validation ici
 
   FieldModel({
     required this.name,
     required this.type,
+    this.title = '',
     this.isRequired = false,
     this.validator, // Ce champ peut être optionnel selon vos besoins
   });
@@ -48,25 +50,27 @@ class custom_form extends StatelessWidget {
     );
   }
 
-  Widget _buildField(FieldModel field) {
-    switch (field.type) {
-      case 'Checkbox':
-        return FormBuilderCheckbox(
-          name: field.name,
-          title: Text(field.name),
-          validator:
-              field.validator, // Utiliser le validateur du FieldModel ici
-        );
-      case 'TextField':
-        return FormBuilderTextField(
-          name: field.name,
-          validator:
-              field.validator, // Utiliser le validateur du FieldModel ici
-        );
-      // Ajoutez d'autres cas pour d'autres types de champs selon les besoins
-      default:
-        return SizedBox
-            .shrink(); // Pour les types inconnus, retournez un widget vide
-    }
+Widget _buildField(FieldModel field) {
+  switch (field.type) {
+    case 'Checkbox':
+      return FormBuilderCheckbox(
+        name: field.name,
+        title: Text(field.title),
+        validator: field.validator,
+      );
+    case 'TextField':
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(field.name), // Ceci affichera le nom de la variable comme titre
+          FormBuilderTextField(
+            name: field.name,
+            validator: field.validator,
+          ),
+        ],
+      );
+    default:
+      return SizedBox.shrink();
   }
+}
 }
