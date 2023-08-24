@@ -1,6 +1,6 @@
 import 'package:simplife/global.dart';
 
-class custom_line_chart extends StatelessWidget {
+class CustomLineChart extends StatefulWidget {
   final List<FlSpot> spots;
 
   // GridData attributes
@@ -8,7 +8,6 @@ class custom_line_chart extends StatelessWidget {
   final Color gridLineColor;
   final double gridLineWidth;
   final bool drawHorizontalLine;
-  double horizontalInterval;
   final bool drawVerticalLine;
   final double verticalInterval;
 
@@ -22,7 +21,6 @@ class custom_line_chart extends StatelessWidget {
   final bool leftTitleShowTitles;
   final Widget Function(double, TitleMeta)? leftTitleGetTitlesWidget;
   final double leftTitleReservedSize;
-  double leftTitleInterval;
   final int leftTitlesNumber;
 
   // Bottom TitlesData attributes
@@ -45,22 +43,17 @@ class custom_line_chart extends StatelessWidget {
 
   // BorderData attributes
   final bool showBorder;
-  double minX;
-  double maxX;
-  double minY;
-  double maxY;
 
   // Default values
-  final Widget Function(double, TitleMeta) defaultGetTitlesWidget = (value, meta) => Center(child: Text(value.toInt().toString(), style: TextStyle(color: Colors.white)));
+  final Widget Function(double, TitleMeta) defaultGetTitlesWidget = (value, meta) => Center(child: Text(value.toInt().toString(), style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0))));
 
-  custom_line_chart({
+  CustomLineChart({
     required this.spots,
     this.showGrid = true,
     this.gridLineColor = const Color(0xff37434d),
-    this.gridLineWidth = 3,
+    this.gridLineWidth = 50,
     this.drawHorizontalLine = true,
-    this.horizontalInterval = 10,
-    this.drawVerticalLine = false,
+    this.drawVerticalLine = true,
     this.verticalInterval = 10,
     this.isCurved = true,
     this.lineColor = Colors.blue,
@@ -69,8 +62,7 @@ class custom_line_chart extends StatelessWidget {
     this.leftTitleShowTitles = true,
     this.leftTitleGetTitlesWidget,
     this.leftTitleReservedSize = 50,
-    this.leftTitleInterval = 10,
-    this.leftTitlesNumber = 5,
+    this.leftTitlesNumber = 4,
     this.bottomTitleShowTitles = true,
     this.bottomTitleGetTitlesWidget,
     this.bottomTitleReservedSize = 50,
@@ -84,33 +76,58 @@ class custom_line_chart extends StatelessWidget {
     this.rightTitleReservedSize = 50,
     this.rightTitleInterval = 10,
     this.showBorder = false,
-    this.minX = 0,
-    this.maxX = 10,
-    this.minY = 0,
-    this.maxY = 10,
-  }) {
-    minX = spots.map((e) => e.x).reduce((a, b) => a < b ? a : b);
-    maxX = spots.map((e) => e.x).reduce((a, b) => a > b ? a : b);
-    minY = spots.map((e) => e.y).reduce((a, b) => a < b ? a : b);
-    maxY = spots.map((e) => e.y).reduce((a, b) => a > b ? a : b);
+  });
 
-    leftTitleInterval = (maxY - minY) / (leftTitlesNumber - 1);
-    horizontalInterval = (maxY - minY) / (leftTitlesNumber - 1);
+  @override
+  _CustomLineChartState createState() => _CustomLineChartState();
+}
+
+class _CustomLineChartState extends State<CustomLineChart> {
+  double minX = 0;
+  double maxX = 0;
+  double minY = 0;
+  double maxY = 0;
+  double horizontalInterval = 0;
+  double leftTitleInterval = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    minX = widget.spots.map((e) => e.x).reduce((a, b) => a < b ? a : b);
+    maxX = widget.spots.map((e) => e.x).reduce((a, b) => a > b ? a : b);
+    minY = widget.spots.map((e) => e.y).reduce((a, b) => a < b ? a : b);
+    maxY = widget.spots.map((e) => e.y).reduce((a, b) => a > b ? a : b);
+
+    leftTitleInterval = (maxY - minY) / (widget.leftTitlesNumber - 1);
+    horizontalInterval = (maxY - minY) / (widget.leftTitlesNumber - 1);
   }
 
   @override
   Widget build(BuildContext context) {
     return LineChart(
       LineChartData(
+        // Access the properties using 'widget.' prefix:
         gridData: FlGridData(
-          show: showGrid,
+          show: widget.showGrid,
           horizontalInterval: horizontalInterval,
-          verticalInterval: verticalInterval,
-          drawVerticalLine: drawVerticalLine,
-          drawHorizontalLine: drawHorizontalLine,
+          verticalInterval: widget.verticalInterval,
+          drawVerticalLine: widget.drawVerticalLine,
+          drawHorizontalLine: widget.drawHorizontalLine,
+          getDrawingHorizontalLine: (value) {
+            return FlLine(
+              color: widget.gridLineColor,
+              strokeWidth: widget.gridLineWidth,
+            );
+          },
+          getDrawingVerticalLine: (value) {
+            return FlLine(
+              color: widget.gridLineColor,
+              strokeWidth: widget.gridLineWidth,
+            );
+          },
         ),
         borderData: FlBorderData(
-          show: showBorder,
+          show: widget.showBorder,
         ),
         minX: minX,
         maxX: maxX,
@@ -118,37 +135,37 @@ class custom_line_chart extends StatelessWidget {
         maxY: maxY,
         titlesData: FlTitlesData(
           leftTitles: AxisTitles( sideTitles : SideTitles(
-            showTitles: leftTitleShowTitles,
-            getTitlesWidget : defaultGetTitlesWidget,
-            reservedSize: leftTitleReservedSize,
+            showTitles: widget.leftTitleShowTitles,
+            getTitlesWidget: widget.leftTitleGetTitlesWidget ?? widget.defaultGetTitlesWidget,
+            reservedSize: widget.leftTitleReservedSize,
             interval: leftTitleInterval,
           )),
           bottomTitles:  AxisTitles( sideTitles : SideTitles(
-            showTitles: bottomTitleShowTitles,
-            getTitlesWidget : defaultGetTitlesWidget,
-            reservedSize: bottomTitleReservedSize,
-            interval: bottomTitleInterval,
+            showTitles: widget.bottomTitleShowTitles,
+            getTitlesWidget: widget.bottomTitleGetTitlesWidget ?? widget.defaultGetTitlesWidget,
+            reservedSize: widget.bottomTitleReservedSize,
+            interval: widget.bottomTitleInterval,
           )),
           rightTitles:  AxisTitles( sideTitles : SideTitles(
-            showTitles: rightTitleShowTitles,
-            getTitlesWidget : defaultGetTitlesWidget,
-            reservedSize: rightTitleReservedSize,
-            interval: rightTitleInterval,
+            showTitles: widget.rightTitleShowTitles,
+            getTitlesWidget: widget.rightTitleGetTitlesWidget ?? widget.defaultGetTitlesWidget,
+            reservedSize: widget.rightTitleReservedSize,
+            interval: widget.rightTitleInterval,
           )),
           topTitles:  AxisTitles( sideTitles : SideTitles(
-            showTitles: topTitleShowTitles,
-            getTitlesWidget : defaultGetTitlesWidget,
-            reservedSize: topTitleReservedSize,
-            interval: topTitleInterval,
+            showTitles: widget.topTitleShowTitles,
+            getTitlesWidget: widget.topTitleGetTitlesWidget ?? widget.defaultGetTitlesWidget,
+            reservedSize: widget.topTitleReservedSize,
+            interval: widget.topTitleInterval,
           )),
         ),
         lineBarsData: [
           LineChartBarData(
-            spots: spots,
-            isCurved: isCurved,
-            color: lineColor,
-            dotData: FlDotData(show: showDotData),
-            belowBarData: BarAreaData(show: showBelowBarData),
+            spots: widget.spots,
+            isCurved: widget.isCurved,
+            color: widget.lineColor,
+            dotData: FlDotData(show: widget.showDotData),
+            belowBarData: BarAreaData(show: widget.showBelowBarData),
           ),
         ],
       ),
