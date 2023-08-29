@@ -7,6 +7,9 @@ export 'dart:convert';
 //app
   //utils
   //service
+    //converters
+      //fl_spot.dart
+      export 'app/utils/converters/fl_spot.dart';
   //views
     //home
       //home_model.dart
@@ -29,6 +32,19 @@ export 'dart:convert';
     //custom_line_chart.dart
     export 'package:fl_chart/fl_chart.dart';
     export 'app/widgets/custom_line_chart.dart';
+    //custom_tile_layout.dart
+    export 'app/widgets/custom_tile_layout.dart';
+
+
+//theme
+  //colors
+  //export 'app/theme/colors.dart';
+  //fonts
+  //export 'app/theme/fonts.dart';
+  //styles
+  export 'theme/styles.dart';
+  //theme_data
+  //export 'app/theme/theme_data.dart';
 
 
 

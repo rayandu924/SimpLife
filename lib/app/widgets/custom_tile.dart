@@ -4,8 +4,8 @@ class custom_tile extends StatelessWidget {
   const custom_tile({
     Key? key,
     this.backgroundColor,
-    this.contentPadding = const EdgeInsets.all(10),
-    this.contentMargin = const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+    this.padding = const EdgeInsets.all(10),
+    this.margin = const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
     this.isEnabled = true,
     this.onTap,
     this.onDoubleTap,
@@ -29,8 +29,8 @@ class custom_tile extends StatelessWidget {
   }) : super(key: key);
 
   final Color? backgroundColor;
-  final EdgeInsets contentMargin;
-  final EdgeInsets contentPadding;
+  final EdgeInsets margin;
+  final EdgeInsets padding;
   final bool isEnabled;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onDoubleTap;
@@ -72,8 +72,8 @@ class custom_tile extends StatelessWidget {
       focusNode: focusNode,
       autofocus: autofocus,
       child: Container(
-        padding: contentPadding,
-        margin: contentMargin,
+        padding: padding,
+        margin: margin,
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(borderRadius ?? 8),

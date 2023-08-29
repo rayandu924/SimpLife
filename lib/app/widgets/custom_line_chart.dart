@@ -93,18 +93,29 @@ class _CustomLineChartState extends State<CustomLineChart> {
   @override
   void initState() {
     super.initState();
+    updateLineChart();
+  }
+
+  @override
+  void didUpdateWidget(covariant CustomLineChart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+      updateLineChart();
+  }
+
+  void updateLineChart() {
     minX = widget.spots.map((e) => e.x).reduce((a, b) => a < b ? a : b);
     maxX = widget.spots.map((e) => e.x).reduce((a, b) => a > b ? a : b);
     minY = widget.spots.map((e) => e.y).reduce((a, b) => a < b ? a : b);
     maxY = widget.spots.map((e) => e.y).reduce((a, b) => a > b ? a : b);
 
     leftTitleInterval = (maxY - minY) / (widget.leftTitlesNumber - 1);
-    horizontalInterval = (maxY - minY) / (widget.leftTitlesNumber - 1);
+    horizontalInterval = leftTitleInterval;
   }
 
   @override
   Widget build(BuildContext context) {
-    return LineChart(
+    return
+    LineChart(
       LineChartData(
         // Access the properties using 'widget.' prefix:
         gridData: FlGridData(
