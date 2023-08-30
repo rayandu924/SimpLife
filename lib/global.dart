@@ -7,6 +7,9 @@ export 'dart:convert';
 //app
   //utils
   //service
+    //validators
+      //email_validator.dart
+      export 'app/utils/validators/ValidatorEmail.dart';
     //converters
       //fl_spot.dart
       export 'app/utils/converters/fl_spot.dart';
@@ -34,6 +37,10 @@ export 'dart:convert';
     export 'app/widgets/custom_line_chart.dart';
     //custom_tile_layout.dart
     export 'app/widgets/custom_tile_layout.dart';
+    //CustomCheckbox.dart
+    export 'app/widgets/CustomCheckbox.dart';
+    //CustomTextField.dart
+    export 'app/widgets/CustomTextField.dart';
 
 
 //theme

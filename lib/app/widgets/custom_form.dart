@@ -53,21 +53,16 @@ class custom_form extends StatelessWidget {
 Widget _buildField(FieldModel field) {
   switch (field.type) {
     case 'Checkbox':
-      return FormBuilderCheckbox(
-        name: field.name,
-        title: Text(field.title),
-        validator: field.validator,
+      return CustomCheckbox(
+            name: field.name,
+            title: field.title,
+            validator: field.validator,
       );
     case 'TextField':
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(field.name), // Ceci affichera le nom de la variable comme titre
-          FormBuilderTextField(
+      return CustomTextField(
             name: field.name,
+            labelText: field.title,
             validator: field.validator,
-          ),
-        ],
       );
     default:
       return SizedBox.shrink();

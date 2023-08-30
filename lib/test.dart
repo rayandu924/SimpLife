@@ -1,4 +1,5 @@
-import 'package:simplife/global.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 void main() => runApp(MyApp());
 
@@ -6,47 +7,52 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Formulaire Simple',
+      title: 'Flutter FormBuilder Example',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SimpleForm(),
+      home: FormExample(),
     );
   }
 }
 
-class SimpleForm extends StatefulWidget {
-  @override
-  _SimpleFormState createState() => _SimpleFormState();
-}
-
-class _SimpleFormState extends State<SimpleForm> {
-  final _formKey = GlobalKey<FormState>();
-  Map<String, dynamic> _formData = {};
+class FormExample extends StatelessWidget {
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Formulaire Simple'),
-      ),
+      appBar: AppBar(title: Text('FormBuilder Exemple')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
+        padding: EdgeInsets.all(16.0),
+        child: FormBuilder(
           key: _formKey,
-          child: ListView(
-            children: [
-              _buildFormRow("Nom", TextInputType.text, (value) {
-                _formData['Nom'] = value;
-              }),
-              _buildFormRow("Age", TextInputType.number, (value) {
-                _formData['Age'] = int.tryParse(value ?? "0");
-              }),
+          child: Column(
+            children: <Widget>[
+              // Checkbox avec texte à droite
+              FormBuilderCheckbox(
+                name: 'accept_terms',
+                title: Text('J\'accepte les termes et conditions'),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+              ),
+
+              // TextField avec un trait en dessous
+              FormBuilderTextField(
+                name: 'username',
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Nom d\'utilisateur',
+                ),
+              ),
+
+              SizedBox(height: 20),
+              
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    print(_formData);  // Affiche les données du formulaire
+                    print(_formKey.currentState!.value);
                   }
                 },
                 child: Text('Soumettre'),
@@ -54,36 +60,6 @@ class _SimpleFormState extends State<SimpleForm> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildFormRow(String label, TextInputType type, FormFieldSetter<String> onSaved) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text(label),
-          ),
-          Expanded(
-            flex: 2,
-            child: TextFormField(
-              keyboardType: type,
-              onSaved: onSaved,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Veuillez remplir ce champ';
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                hintText: 'Entrez $label',
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

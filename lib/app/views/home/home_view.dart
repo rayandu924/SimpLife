@@ -12,30 +12,23 @@ class HomeView extends StatelessWidget {
     Map<String, Object> data = model.fetchData();
     List<FlSpot> spots = convertStringToFlSpots(data['spots'] as String);
 
+    final List<FieldModel> sampleFields = [
+    FieldModel(name: 'username', title: 'Username', type: 'TextField', isRequired: true, validator: emailValidator),
+    FieldModel(name: 'Karim', title: 'Karim', type: 'TextField', isRequired: true),
+    FieldModel(name: 'acceptTerms', title: 'Accept Terms & Conditions', type: 'Checkbox', isRequired: true),
+  ];
+
     return Scaffold(
       appBar: AppBar(title: Text('Accueil')),
       body: Column(
         children: [
           Expanded(
-              child: CustomTileLayout(
-            tile: custom_tile(
-              backgroundColor: Colors.blue,
-              padding: EdgeInsets.fromLTRB(0, 10, 0, 0)
-            ),
-            center: CustomLineChart(
-                spots: spots,
-                drawVerticalLine: true,
-                drawHorizontalLine: true,
-                bottomTitleInterval: 1,
-                gridLineColor: Color.fromARGB(255, 0, 0, 0),
-                lineColor: Color.fromARGB(255, 255, 0, 0),
-                gridLineWidth: 2,
-                leftTitleReservedSize: 37,
-                bottomTitleReservedSize: 37,
-              ),
-            contentMargin: EdgeInsets.symmetric(vertical: 3),
-          ))
-        ],
+              child:custom_form(
+          fields: sampleFields,
+          onSubmit: (formData) {
+            print(formData);
+          },)),
+        ]
       ),
     );
   }
