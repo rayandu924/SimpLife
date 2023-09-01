@@ -9,3 +9,15 @@ const TextStyle tileTitle = TextStyle(
   fontWeight: FontWeight.bold,
   color: Colors.white,
 );
+
+const TextStyle textFielTitle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+);
+
+//ccheck box text
+const TextStyle checkBoxTitle = TextStyle(
+  fontSize: 20,
+  color: Colors.white,
+);

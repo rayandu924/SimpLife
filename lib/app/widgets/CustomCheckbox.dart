@@ -1,16 +1,10 @@
 import 'package:simplife/global.dart';
 
 class CustomCheckbox extends StatefulWidget {
-  final String name;
-  final String title;
-  final FormFieldValidator<bool?>? validator;
-  final bool isRequired;
+  final FieldModel field;
 
   CustomCheckbox({
-    required this.name,
-    required this.title,
-    this.validator,
-    required this.isRequired,
+    required this.field,
   });
 
   @override
@@ -21,14 +15,21 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderCheckbox(
-      name: widget.name,
-      title: Text(widget.title),  // Utilisation de la couleur pour le titre
-      decoration: InputDecoration(
-        border: InputBorder.none,
+      name: widget.field.name,
+      title: ValueListenableBuilder<Color>(
+        valueListenable: widget.field.fieldModel.colorTitle,
+        builder: (context, color, child) {
+          return Text(
+            widget.field.title,
+            style: checkBoxTitle.copyWith(color: color),
+          );
+        },
       ),
-      validator: widget.validator,
-      activeColor: Colors.green,
-      initialValue: false,
+      validator: widget.field.fieldModel.validator,
+      initialValue: widget.field.initialValue,
+      onChanged: (value) => widget.field.onChanged({value, widget.field.fieldModel}),
+      checkColor: widget.field.fieldModel.colorCheck,
+      activeColor: widget.field.fieldModel.colorActive,
     );
   }
 }

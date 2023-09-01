@@ -1,18 +1,46 @@
 import 'package:simplife/global.dart';
 
 class FieldModel {
+  final String type;
   final String name;
   final String title;
-  final String? type;
-  final bool isRequired;
-  final FormFieldValidator? validator; // Ajout de la fonction de validation ici
+  final ValueChanged<dynamic> onChanged;
+  final dynamic initialValue;
+  final dynamic fieldModel;
 
   FieldModel({
-    required this.name,
     required this.type,
-    this.title = '',
-    this.isRequired = true,
-    this.validator, // Ce champ peut être optionnel selon vos besoins
+    required this.name,
+    required this.title,
+    required this.onChanged,
+    required this.initialValue,
+    required this.fieldModel,
+  });
+}
+
+class TextFieldModel {
+  final ValueNotifier<Color> colorTitle;
+  final ValueNotifier<Color> colorBorder;
+  final FormFieldValidator<dynamic> validator;
+
+  TextFieldModel({
+    required this.colorTitle,
+    required this.colorBorder,
+    required this.validator,
+  });
+}
+
+class CheckboxModel {
+  final ValueNotifier<Color> colorTitle;
+  final Color colorCheck;
+  final Color colorActive;
+  final FormFieldValidator<dynamic> validator;
+
+  CheckboxModel({
+    required this.colorTitle,
+    this.colorCheck = Colors.white,
+    this.colorActive = Colors.green,
+    required this.validator,
   });
 }
 
@@ -57,17 +85,11 @@ class custom_form extends StatelessWidget {
     switch (field.type) {
       case 'Checkbox':
         return CustomCheckbox(
-          name: field.name,
-          title: field.title,
-          validator: field.validator,
-          isRequired: field.isRequired,
+          field: field,
         );
       case 'TextField':
         return CustomTextField(
-          name: field.name,
-          labelText: field.title,
-          validator: field.validator,
-          isRequired: field.isRequired,
+          field: field,
         );
       default:
         return SizedBox.shrink();

@@ -10,11 +10,13 @@ export 'dart:convert';
 //app
   //utils
   //service
-    //validators
-      //ValidatorEmail.dart
-      export 'app/utils/validators/ValidatorEmail.dart';
-      //ValidatorCheckbox.dart
-      export 'app/utils/validators/ValidatorCheckbox.dart';
+    //form
+      //form
+        //validator
+        export 'app/utils/form/validator.dart';
+        //onChanged
+        export 'app/utils/form/onChanged.dart';
+
     //converters
       //fl_spot.dart
       export 'app/utils/converters/fl_spot.dart';
@@ -24,6 +26,16 @@ export 'dart:convert';
       export 'app/views/home/home_model.dart';
       //home_view.dart
       export 'app/views/home/home_view.dart';
+    //login
+      //login_view.dart
+      export 'app/views/login/login_view.dart';
+      //login_model.dart
+      export 'app/views/login/login_model.dart';
+    //signup
+      //signup_view.dart
+      export 'app/views/signup/signup_view.dart';
+      //signup_model.dart
+      export 'app/views/signup/signup_model.dart';
   //widgets
     //custom_carousel_slider.dart
     export 'package:carousel_slider/carousel_slider.dart';

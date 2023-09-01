@@ -1,16 +1,10 @@
 import 'package:simplife/global.dart';
 
 class CustomTextField extends StatefulWidget {
-  final String name;
-  final String labelText;
-  final FormFieldValidator<String?>? validator;
-  final bool isRequired;
+  final FieldModel field;
 
   CustomTextField({
-    required this.name,
-    required this.labelText,
-    this.validator,
-    required this.isRequired,
+    required this.field,
   });
 
   @override
@@ -18,63 +12,47 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  final TextEditingController _controller = TextEditingController();
-  final ValueNotifier<Color> _borderColor = ValueNotifier<Color>(Colors.black);
-
-@override
-void initState() {
-  super.initState();
-
-  _borderColor.value = widget.isRequired ? Colors.red : Colors.black;
-  
-  _controller.addListener(() {
-    if (widget.validator != null) {
-      String? errorText = widget.validator!(_controller.text);
-    if (_controller.text.isEmpty) {
-      if (widget.isRequired) {
-        _borderColor.value = Colors.red;
-      } else {
-        _borderColor.value = Colors.black;
-      }
-    } else if (errorText == null) {
-      _borderColor.value = Colors.green;
-    } else {
-      _borderColor.value = Colors.orange;
-    }
-      // Force la mise à jour de l'état du champ.
-      setState(() {});
-    }
-  });
-}
-
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<Color>(
-      valueListenable: _borderColor,
-      builder: (context, color, child) {
-        return FormBuilderTextField(
-          name: widget.name,
-          controller: _controller,
-          decoration: InputDecoration(
-              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 13), borderRadius: BorderRadius.circular(4)),
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 13), borderRadius: BorderRadius.circular(4)),
-              focusedErrorBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 13), borderRadius: BorderRadius.circular(4)),
-              errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 13), borderRadius: BorderRadius.circular(4)),
-              disabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 13), borderRadius: BorderRadius.circular(4)),
-              labelText: widget.labelText,
-              labelStyle: TextStyle(color: color)
+      valueListenable: widget.field.fieldModel.colorTitle,
+      builder: (context, colorTitle, child) {
+        return ValueListenableBuilder<Color>(
+          valueListenable: widget.field.fieldModel.colorBorder,
+          builder: (context, colorBorder, child) {
+            return FormBuilderTextField(
+              name: widget.field.name,
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: colorBorder, width: 13),
+                  borderRadius: BorderRadius.circular(4)
                 ),
-          validator: widget.validator,
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: colorBorder, width: 13),
+                  borderRadius: BorderRadius.circular(4)
+                ),
+                focusedErrorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: colorBorder, width: 13),
+                  borderRadius: BorderRadius.circular(4)
+                ),
+                errorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: colorBorder, width: 13),
+                  borderRadius: BorderRadius.circular(4)
+                ),
+                disabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: colorBorder, width: 13),
+                  borderRadius: BorderRadius.circular(4)
+                ),
+                labelText: widget.field.title,
+                labelStyle: textFielTitle.copyWith(color: colorTitle),
+              ),
+              validator: widget.field.fieldModel.validator,
+              initialValue: widget.field.initialValue,
+              onChanged: (value) => widget.field.onChanged({value, widget.field.fieldModel}),
+            );
+          },
         );
       },
     );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    _borderColor.dispose();
-    super.dispose();
   }
 }

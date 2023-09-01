@@ -1,5 +1,3 @@
-import 'package:simplife/app/utils/converters/fl_spot.dart';
-import 'package:simplife/config.dart';
 import 'package:simplife/global.dart';
 
 class HomeView extends StatelessWidget {
@@ -18,25 +16,31 @@ class HomeView extends StatelessWidget {
           name: 'username',
           title: 'Username',
           type: 'TextField',
-          isRequired: true,
-          validator: ValidatorEmail),
-      FieldModel(
-          name: 'Karim', title: 'Karim', type: 'TextField', isRequired: false),
+          fieldModel: TextFieldModel(
+              colorTitle: ValueNotifier<Color>(Colors.white),
+              colorBorder: ValueNotifier<Color>(Colors.white),
+              validator: ValidatorEmail,),
+          initialValue : 'test',
+          onChanged: onChangedTextFormField,
+      ),
       FieldModel(
           name: 'acceptTerms',
-          title: 'Accept Terms & Conditions',
+          title: 'Accept Terms & Conditionsssssssssssssssssssss',
           type: 'Checkbox',
-          isRequired: true,
-          validator: ValidatorCheckbox),
+          fieldModel: CheckboxModel(
+              colorTitle: ValueNotifier<Color>(Colors.red),
+                        validator: ValidatorCheckbox,
+          ),
+          initialValue : false,
+          onChanged: onChangedCheckbox,),
     ];
-
     return Scaffold(
       appBar: AppBar(title: Text('Accueil')),
       body: Column(children: [
         Expanded(
             child: CustomTileLayout(
           tile: const custom_tile(
-            backgroundColor: Colors.black,
+            backgroundColor: Color.fromARGB(255, 81, 0, 255),
           ),
           topLeft: const Text('Top Left', style: tileTitle),
           center:custom_form(
