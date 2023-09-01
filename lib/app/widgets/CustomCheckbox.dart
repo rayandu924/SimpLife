@@ -1,10 +1,10 @@
 import 'package:simplife/global.dart';
 
-class CustomCheckbox extends StatelessWidget {
+class CustomCheckbox extends StatefulWidget {
   final String name;
   final String title;
   final FormFieldValidator<bool?>? validator;
-  final bool? isRequired;
+  final bool isRequired;
 
   CustomCheckbox({
     required this.name,
@@ -14,14 +14,22 @@ class CustomCheckbox extends StatelessWidget {
   });
 
   @override
+  _CustomCheckboxState createState() => _CustomCheckboxState();
+}
+
+class _CustomCheckboxState extends State<CustomCheckbox> {
+  @override
   Widget build(BuildContext context) {
     return FormBuilderCheckbox(
-      name: name,
-      title: Text(title),
+      name: widget.name,
+      title: Text(widget.title),  // Utilisation de la couleur pour le titre
       decoration: InputDecoration(
         border: InputBorder.none,
       ),
-      validator: validator,
+      validator: widget.validator,
+      activeColor: Colors.green,
+      initialValue: false,
     );
   }
 }
+

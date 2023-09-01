@@ -57,12 +57,13 @@ void initState() {
           name: widget.name,
           controller: _controller,
           decoration: InputDecoration(
-              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 4.0)),
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 4.0)),
-              focusedErrorBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 4.0)),
-              errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 4.0)),
-              disabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 4.0)),
-              labelText: widget.labelText
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 13), borderRadius: BorderRadius.circular(4)),
+              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 13), borderRadius: BorderRadius.circular(4)),
+              focusedErrorBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 13), borderRadius: BorderRadius.circular(4)),
+              errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 13), borderRadius: BorderRadius.circular(4)),
+              disabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 13), borderRadius: BorderRadius.circular(4)),
+              labelText: widget.labelText,
+              labelStyle: TextStyle(color: color)
                 ),
           validator: widget.validator,
         );

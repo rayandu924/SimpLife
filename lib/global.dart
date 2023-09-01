@@ -11,8 +11,10 @@ export 'dart:convert';
   //utils
   //service
     //validators
-      //email_validator.dart
+      //ValidatorEmail.dart
       export 'app/utils/validators/ValidatorEmail.dart';
+      //ValidatorCheckbox.dart
+      export 'app/utils/validators/ValidatorCheckbox.dart';
     //converters
       //fl_spot.dart
       export 'app/utils/converters/fl_spot.dart';

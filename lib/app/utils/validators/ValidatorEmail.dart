@@ -1,6 +1,6 @@
 import 'package:simplife/global.dart';
 
-FormFieldValidator<dynamic> emailValidator = (value) {
+FormFieldValidator<dynamic> ValidatorEmail = (value) {
   // Regular expression for email validation
   const pattern = r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+';
   final regExp = RegExp(pattern);
