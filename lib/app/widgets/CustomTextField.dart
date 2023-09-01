@@ -4,11 +4,13 @@ class CustomTextField extends StatefulWidget {
   final String name;
   final String labelText;
   final FormFieldValidator<String?>? validator;
+  final bool isRequired;
 
   CustomTextField({
     required this.name,
     required this.labelText,
     this.validator,
+    required this.isRequired,
   });
 
   @override
@@ -17,17 +19,28 @@ class CustomTextField extends StatefulWidget {
 
 class _CustomTextFieldState extends State<CustomTextField> {
   final TextEditingController _controller = TextEditingController();
-  final ValueNotifier<Color> _borderColor = ValueNotifier<Color>(const Color.fromARGB(255, 255, 0, 0));
+  final ValueNotifier<Color> _borderColor = ValueNotifier<Color>(Colors.black);
 
 @override
 void initState() {
   super.initState();
 
+  _borderColor.value = widget.isRequired ? Colors.red : Colors.black;
+  
   _controller.addListener(() {
     if (widget.validator != null) {
       String? errorText = widget.validator!(_controller.text);
-      _borderColor.value = errorText == null ? Colors.green : Colors.red;
-
+    if (_controller.text.isEmpty) {
+      if (widget.isRequired) {
+        _borderColor.value = Colors.red;
+      } else {
+        _borderColor.value = Colors.black;
+      }
+    } else if (errorText == null) {
+      _borderColor.value = Colors.green;
+    } else {
+      _borderColor.value = Colors.orange;
+    }
       // Force la mise à jour de l'état du champ.
       setState(() {});
     }
@@ -44,11 +57,13 @@ void initState() {
           name: widget.name,
           controller: _controller,
           decoration: InputDecoration(
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(color: color, width: 10.0),
-            ),
-            labelText: widget.labelText,
-          ),
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 4.0)),
+              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 4.0)),
+              focusedErrorBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 4.0)),
+              errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 4.0)),
+              disabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: color,width: 4.0)),
+              labelText: widget.labelText
+                ),
           validator: widget.validator,
         );
       },

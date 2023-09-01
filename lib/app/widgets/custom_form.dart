@@ -11,7 +11,7 @@ class FieldModel {
     required this.name,
     required this.type,
     this.title = '',
-    this.isRequired = false,
+    this.isRequired = true,
     this.validator, // Ce champ peut être optionnel selon vos besoins
   });
 }
@@ -33,13 +33,13 @@ class custom_form extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               final form = FormBuilder.of(context);
-
               if (form != null && form.validate()) {
                 // Sauvegarder les valeurs
                 form.save();
 
                 // Récupérer les données du formulaire
                 Map<String, dynamic> formData = form.value;
+                print(formData);
                 onSubmit(formData);
               }
             },
@@ -57,12 +57,14 @@ Widget _buildField(FieldModel field) {
             name: field.name,
             title: field.title,
             validator: field.validator,
+            isRequired: field.isRequired,
       );
     case 'TextField':
       return CustomTextField(
             name: field.name,
             labelText: field.title,
             validator: field.validator,
+            isRequired: field.isRequired,
       );
     default:
       return SizedBox.shrink();

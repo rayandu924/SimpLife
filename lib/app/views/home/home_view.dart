@@ -14,7 +14,7 @@ class HomeView extends StatelessWidget {
 
     final List<FieldModel> sampleFields = [
     FieldModel(name: 'username', title: 'Username', type: 'TextField', isRequired: true, validator: emailValidator),
-    FieldModel(name: 'Karim', title: 'Karim', type: 'TextField', isRequired: true),
+    FieldModel(name: 'Karim', title: 'Karim', type: 'TextField', isRequired: false),
     FieldModel(name: 'acceptTerms', title: 'Accept Terms & Conditions', type: 'Checkbox', isRequired: true),
   ];
 
