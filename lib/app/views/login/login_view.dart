@@ -11,13 +11,22 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Connexion")),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [],
-        ),
-      ),
-    );
-  }
+      appBar: AppBar(title: Text('Accueil')),
+      body: Column(children: [
+        Expanded(
+            child: CustomTileLayout(
+          tile: const custom_tile(
+            backgroundColor: Color.fromARGB(255, 81, 0, 255),
+          ),
+          topLeft: const Text('Login', style: tileTitle),
+          center:custom_form(
+          fields: _loginModel.loginFormFieldModel,
+          onSubmit: (formData) {
+            print(formData);
+          },)
+        )),
+      ]),
+  );
 }
+}
+

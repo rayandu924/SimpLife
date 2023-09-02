@@ -46,6 +46,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 labelText: widget.field.title,
                 labelStyle: textFielTitle.copyWith(color: colorTitle),
               ),
+              style: textFieldHint,
               validator: widget.field.fieldModel.validator,
               initialValue: widget.field.initialValue,
               onChanged: (value) => widget.field.onChanged({value, widget.field.fieldModel}),

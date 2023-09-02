@@ -16,8 +16,13 @@ const TextStyle textFielTitle = TextStyle(
   color: Colors.white,
 );
 
-//ccheck box text
+const TextStyle textFieldHint = TextStyle(
+  fontSize: 20,
+  color: Colors.white,
+);
+
 const TextStyle checkBoxTitle = TextStyle(
   fontSize: 20,
   color: Colors.white,
 );
+

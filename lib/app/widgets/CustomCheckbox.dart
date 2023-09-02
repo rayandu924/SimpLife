@@ -27,10 +27,11 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
       ),
       validator: widget.field.fieldModel.validator,
       initialValue: widget.field.initialValue,
-      onChanged: (value) => widget.field.onChanged({value, widget.field.fieldModel}),
+      onChanged: (value) =>
+          widget.field.onChanged({value, widget.field.fieldModel}),
       checkColor: widget.field.fieldModel.colorCheck,
       activeColor: widget.field.fieldModel.colorActive,
+      side: BorderSide(color: widget.field.fieldModel.colorBorder, width: 2),
     );
   }
 }
-

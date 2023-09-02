@@ -7,9 +7,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //fetchData(); after build the home helped by the data fetched
-    Map<String, Object> data = model.fetchData();
-    List<FlSpot> spots = convertStringToFlSpots(data['spots'] as String);
 
     final List<FieldModel> sampleFields = [
       FieldModel(

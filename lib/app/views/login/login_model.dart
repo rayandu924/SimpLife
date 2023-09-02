@@ -1,20 +1,43 @@
 import 'package:simplife/global.dart';
 
+class LoginFormModel {
+  String username;
+  String email;
+
+  LoginFormModel({
+    this.username = '',
+    this.email = '',
+  });
+}
+
 class LoginModel extends ChangeNotifier {
-  String? email;
-  String? password;
 
-  void setEmail(String value) {
-    email = value;
-    notifyListeners();
-  }
+  final LoginFormModel loginFormModel = LoginFormModel();
 
-  void setPassword(String value) {
-    password = value;
-    notifyListeners();
-  }
+  final List<FieldModel> loginFormFieldModel = [
+    FieldModel(
+        name: 'username',
+        title: 'Username',
+        type: 'TextField',
+        fieldModel: TextFieldModel(
+            colorTitle: ValueNotifier<Color>(Colors.orange),
+            colorBorder: ValueNotifier<Color>(Colors.orange),
+            validator: ValidatorEmail,),
+        initialValue : 'test',
+        onChanged: (value) => onChangedTextFormField(value)
+    ),
+    FieldModel(
+        name: 'acceptTerms',
+        title: 'Accept Terms & Conditionsssssssssssssssssssss',
+        type: 'Checkbox',
+        fieldModel: CheckboxModel(
+            colorTitle: ValueNotifier<Color>(Colors.red),
+                      validator: ValidatorCheckbox,
+        ),
+        initialValue : false,
+        onChanged: (value) => onChangedCheckbox(value) 
+    ),
+  ];
 
-  // Vous pouvez ajouter des méthodes pour gérer la logique de connexion ici
-  // Par exemple, se connecter à une API d'authentification
-  // N'oubliez pas d'appeler notifyListeners() si le modèle change
+
 }

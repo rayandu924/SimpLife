@@ -34,12 +34,14 @@ class CheckboxModel {
   final ValueNotifier<Color> colorTitle;
   final Color colorCheck;
   final Color colorActive;
+  final Color colorBorder;
   final FormFieldValidator<dynamic> validator;
 
   CheckboxModel({
     required this.colorTitle,
     this.colorCheck = Colors.white,
     this.colorActive = Colors.green,
+    this.colorBorder = Colors.red,
     required this.validator,
   });
 }
