@@ -18,34 +18,6 @@ class FieldModel {
   });
 }
 
-class TextFieldModel {
-  final ValueNotifier<Color> colorTitle;
-  final ValueNotifier<Color> colorBorder;
-  final FormFieldValidator<dynamic> validator;
-
-  TextFieldModel({
-    required this.colorTitle,
-    required this.colorBorder,
-    required this.validator,
-  });
-}
-
-class CheckboxModel {
-  final ValueNotifier<Color> colorTitle;
-  final Color colorCheck;
-  final Color colorActive;
-  final Color colorBorder;
-  final FormFieldValidator<dynamic> validator;
-
-  CheckboxModel({
-    required this.colorTitle,
-    this.colorCheck = Colors.white,
-    this.colorActive = Colors.green,
-    this.colorBorder = Colors.red,
-    required this.validator,
-  });
-}
-
 class custom_form extends StatelessWidget {
   final _formKey = GlobalKey<FormBuilderState>();
   final List<FieldModel> fields;

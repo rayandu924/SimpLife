@@ -1,5 +1,19 @@
 import 'package:simplife/global.dart';
 
+class TextFieldModel {
+  final ValueNotifier<Color> colorTitle = ValueNotifier<Color>(Colors.orange);
+  final ValueNotifier<Color> colorBorder = ValueNotifier<Color>(Colors.orange);
+  final FormFieldValidator<dynamic> validator;
+  final ValueNotifier<String> variable;
+  String value = '';
+
+
+  TextFieldModel({
+    required this.validator,
+    required this.variable,
+  });
+}
+
 class CustomTextField extends StatefulWidget {
   final FieldModel field;
 
@@ -49,7 +63,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
               style: textFieldHint,
               validator: widget.field.fieldModel.validator,
               initialValue: widget.field.initialValue,
-              onChanged: (value) => widget.field.onChanged({value, widget.field.fieldModel}),
+              onChanged: (value) {
+                widget.field.fieldModel.value = value;
+                widget.field.onChanged(widget.field.fieldModel);
+              },            
             );
           },
         );

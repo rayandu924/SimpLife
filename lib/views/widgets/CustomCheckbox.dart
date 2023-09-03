@@ -1,5 +1,23 @@
 import 'package:simplife/global.dart';
 
+class CheckboxModel {
+  final ValueNotifier<Color> colorTitle = ValueNotifier<Color>(Colors.orange);
+  final Color colorCheck;
+  final Color colorActive;
+  final Color colorBorder;
+  final FormFieldValidator<dynamic> validator;
+  final ValueNotifier<bool> variable;
+  bool value = false;
+
+  CheckboxModel({
+    this.colorCheck = Colors.white,
+    this.colorActive = Colors.green,
+    this.colorBorder = Colors.red,
+    required this.validator,
+    required this.variable,
+  });
+}
+
 class CustomCheckbox extends StatefulWidget {
   final FieldModel field;
 
@@ -27,8 +45,10 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
       ),
       validator: widget.field.fieldModel.validator,
       initialValue: widget.field.initialValue,
-      onChanged: (value) =>
-          widget.field.onChanged({value, widget.field.fieldModel}),
+      onChanged: (value) => {
+        widget.field.fieldModel.value = value,
+        widget.field.fieldModel.onChanged(widget.field.fieldModel)
+      },
       checkColor: widget.field.fieldModel.colorCheck,
       activeColor: widget.field.fieldModel.colorActive,
       side: BorderSide(color: widget.field.fieldModel.colorBorder, width: 2),
