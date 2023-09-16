@@ -1,8 +1,5 @@
 import 'package:simplife/librairies.dart';
 
-//TexteStyle of the app
-
-
 //Tile Title
 const TextStyle tileTitle = TextStyle(
   fontSize: 25,

@@ -10,7 +10,7 @@ class SimplifeApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SignUpPageView(),
+      home: HomePageView(),
     );
   }
 }

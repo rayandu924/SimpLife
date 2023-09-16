@@ -7,30 +7,13 @@ class HomePageView extends StatefulWidget {
 
 class _HomePageViewState extends State<HomePageView> {
 
+  HomePageModel homePageModel = HomePageModel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Liste Réordonnable'),
-      ),
       body: CustomReorderableListView(
-        children: [
-          ListTile(
-            title: Text('Élément 1'),
-          ),
-          ListTile(
-            title: Text('Élément 2'),
-          ),
-          ListTile(
-            title: Text('Élément 3'),
-          ),
-          ListTile(
-            title: Text('Élément 4'),
-          ),
-          ListTile(
-            title: Text('Élément 5'),
-          ),
-        ],
+        children: homePageModel.sections,
       ),
     );
   }
