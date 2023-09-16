@@ -1,4 +1,4 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
 class TextFieldModel {
   final ValueNotifier<Color> colorTitle = ValueNotifier<Color>(Colors.orange);
@@ -58,8 +58,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   borderRadius: BorderRadius.circular(4)
                 ),
                 labelText: widget.field.title,
-                labelStyle: textFielTitle.copyWith(color: colorTitle),
+                labelStyle: textFieldTitle.copyWith(color: colorTitle),
+                errorStyle: textFieldError,
               ),
+              cursorColor: Colors.white,
               style: textFieldHint,
               validator: widget.field.fieldModel.validator,
               initialValue: widget.field.initialValue,
@@ -72,5 +74,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
         );
       },
     );
+  }
+}
+
+void onChangedTextFormField(TextFieldModel textFieldModel) {
+  if (textFieldModel.validator(textFieldModel.value) != null) {
+    textFieldModel.colorTitle.value = Colors.orange;
+    textFieldModel.colorBorder.value = Colors.orange;
+  } else {
+    textFieldModel.colorTitle.value = Colors.green;
+    textFieldModel.colorBorder.value = Colors.green;
+    textFieldModel.variable.value = textFieldModel.value;
   }
 }

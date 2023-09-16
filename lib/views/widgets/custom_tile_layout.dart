@@ -1,20 +1,24 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
 class CustomTileLayout extends StatelessWidget {
   final Widget? topLeft;
+  final Widget? topCenter; 
   final Widget? topRight;
   final Widget? bottomLeft;
+  final Widget? bottomCenter; 
   final Widget? bottomRight;
   final Widget? center;
-  final custom_tile tile;
+  final CustomTile tile;
   final EdgeInsetsGeometry contentMargin;
 
   CustomTileLayout({
     Key? key,
     required this.tile,
     this.topLeft,
+    this.topCenter, 
     this.topRight,
     this.bottomLeft,
+    this.bottomCenter, 
     this.bottomRight,
     this.center,
     this.contentMargin = const EdgeInsets.all(0),
@@ -22,30 +26,29 @@ class CustomTileLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return custom_tile(
-      // Récupérer toutes les propriétés de votre tile ici
-      backgroundColor: tile.backgroundColor,
-      padding: tile.padding,
-      margin: tile.margin,
-      //... autres propriétés
+    return tile.copyWith(
       contentChild: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (topLeft != null || topRight != null)
+          if (topLeft != null || topCenter != null || topRight != null)
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (topLeft != null) Expanded(child: topLeft!),
-                if (topRight != null) Expanded(child: topRight!),
+                if (topLeft != null) topLeft!,
+                if (topCenter != null) Expanded(child: topCenter!),
+                if (topRight != null) topRight!,
               ],
             ),
           SizedBox(height: contentMargin.vertical), // Ajout d'une marge en haut
-          if (center != null) Expanded(child: center!),
+          if (center != null) center!,
           SizedBox(height: contentMargin.vertical), // Ajout d'une marge en bas
-          if (bottomLeft != null || bottomRight != null)
+          if (bottomLeft != null || bottomCenter != null || bottomRight != null)
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (bottomLeft != null) Expanded(child: bottomLeft!),
-                if (bottomRight != null) Expanded(child: bottomRight!),
+                if (bottomLeft != null) bottomLeft!,
+                if (bottomCenter != null) Expanded(child: bottomCenter!),
+                if (bottomRight != null) bottomRight!,
               ],
             ),
         ],

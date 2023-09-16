@@ -1,4 +1,4 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
 class FieldModel {
   final String type;
@@ -18,38 +18,46 @@ class FieldModel {
   });
 }
 
-class custom_form extends StatelessWidget {
-  final _formKey = GlobalKey<FormBuilderState>();
+class CustomForm extends StatelessWidget {
+  final GlobalKey<FormBuilderState> _formKey;
   final List<FieldModel> fields;
-  final Function(Map<String, dynamic>) onSubmit; // <-- Ajoutez cette ligne
+  final Function(Map<String, dynamic>) onSubmit;
+  final VoidCallback buttonCallback;
 
-  custom_form({
+  factory CustomForm({
+    required List<FieldModel> fields,
+    required Function(Map<String, dynamic>) onSubmit,
+  }) {
+    GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+    
+    void buttonCallbackFunction() {
+      final form = formKey.currentState;
+      if (form != null && form.validate()) {
+        form.save();
+        Map<String, dynamic> formData = form.value;
+        print(formData);
+        onSubmit(formData);
+      }
+    }
+
+    return CustomForm._(formKey: formKey, fields: fields, onSubmit: onSubmit, buttonCallback: buttonCallbackFunction);
+  }
+
+  CustomForm._({
+    required GlobalKey<FormBuilderState> formKey,
     required this.fields,
     required this.onSubmit,
-  }); // <-- Modifiez cette ligne
+    required this.buttonCallback,
+  }) : _formKey = formKey;
 
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _formKey,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           ...fields.map((field) => _buildField(field)).toList(),
-          ElevatedButton(
-            onPressed: () {
-              final form = _formKey.currentState;
-              if (form != null && form.validate()) {
-                // Sauvegarder les valeurs
-                form.save();
-
-                // Récupérer les données du formulaire
-                Map<String, dynamic> formData = form.value;
-                print(formData);
-                onSubmit(formData);
-              }
-            },
-            child: Text('Soumettre'),
-          ),
         ],
       ),
     );

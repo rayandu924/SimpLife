@@ -1,4 +1,4 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
 class LoginFormModel {
   final ValueNotifier<String> username = ValueNotifier<String>('');

@@ -1,4 +1,4 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
 class CheckboxModel {
   final ValueNotifier<Color> colorTitle = ValueNotifier<Color>(Colors.orange);
@@ -47,11 +47,20 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
       initialValue: widget.field.initialValue,
       onChanged: (value) => {
         widget.field.fieldModel.value = value,
-        widget.field.fieldModel.onChanged(widget.field.fieldModel)
+        widget.field.onChanged(widget.field.fieldModel)
       },
       checkColor: widget.field.fieldModel.colorCheck,
       activeColor: widget.field.fieldModel.colorActive,
       side: BorderSide(color: widget.field.fieldModel.colorBorder, width: 2),
     );
+  }
+}
+
+void onChangedCheckbox(CheckboxModel checkboxModel) {
+  if (checkboxModel.validator(checkboxModel.value) != null) {
+    checkboxModel.colorTitle.value = Colors.red;
+  } else {
+    checkboxModel.colorTitle.value = Colors.green;
+    checkboxModel.variable.value = checkboxModel.value;
   }
 }

@@ -1,4 +1,4 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
 FormFieldValidator<dynamic> ValidatorCheckbox = (value) {
   if (value == null || !value) {
@@ -16,7 +16,16 @@ FormFieldValidator<dynamic> ValidatorEmail = (value) {
   if (value == null || value.isEmpty) {
     return 'Veuillez saisir un email';
   } else if (!regExp.hasMatch(value)) {
-    return 'Veuillez saisir un email valide';
+    return 'Veuillez saisir un eeeeeemail valide';
+  }
+  return null;
+};
+
+FormFieldValidator<dynamic> ValidatorPassword = (value) {
+  if (value == null || value.isEmpty) {
+    return 'Veuillez saisir un mot de passe';
+  } else if (value.length < 8) {
+    return 'Le mot de passe doit contenir au moins 8 caractères';
   }
   return null;
 };

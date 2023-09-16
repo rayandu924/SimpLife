@@ -1,4 +1,4 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
 //TexteStyle of the app
 
@@ -10,8 +10,8 @@ const TextStyle tileTitle = TextStyle(
   color: Colors.white,
 );
 
-const TextStyle textFielTitle = TextStyle(
-  fontSize: 20,
+const TextStyle textFieldTitle = TextStyle(
+  fontSize: 22,
   fontWeight: FontWeight.bold,
   color: Colors.white,
 );
@@ -19,6 +19,12 @@ const TextStyle textFielTitle = TextStyle(
 const TextStyle textFieldHint = TextStyle(
   fontSize: 20,
   color: Colors.white,
+);
+
+const TextStyle textFieldError = TextStyle(
+  fontSize: 15,
+  fontWeight: FontWeight.bold,
+  color: Colors.red,
 );
 
 const TextStyle checkBoxTitle = TextStyle(

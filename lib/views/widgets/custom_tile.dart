@@ -1,7 +1,7 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
-class custom_tile extends StatelessWidget {
-  const custom_tile({
+class CustomTile  extends StatelessWidget {
+  const CustomTile ({
     Key? key,
     this.backgroundColor,
     this.padding = const EdgeInsets.all(10),
@@ -24,6 +24,7 @@ class custom_tile extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.contentChild,
+    this.wrapChild = false,  // Nouveau paramètre
     this.shadowColor,
     this.elevation,
   }) : super(key: key);
@@ -49,6 +50,7 @@ class custom_tile extends StatelessWidget {
   final FocusNode? focusNode;
   final bool autofocus;
   final Widget? contentChild;
+  final bool wrapChild;  // Nouveau paramètre
   final Color? shadowColor;
   final double? elevation;
 
@@ -86,8 +88,62 @@ class custom_tile extends StatelessWidget {
                 ]
               : null,
         ),
-        child: contentChild,
+        child: wrapChild ? Wrap(children: [if (contentChild != null) contentChild!]) : contentChild,
       ),
+    );
+  }
+
+  CustomTile copyWith({
+    Color? backgroundColor,
+    EdgeInsets? margin,
+    EdgeInsets? padding,
+    bool? isEnabled,
+    GestureTapCallback? onTap,
+    GestureTapCallback? onDoubleTap,
+    GestureLongPressCallback? onLongPress,
+    ValueChanged<bool>? onHighlightChanged,
+    ValueChanged<bool>? onHover,
+    bool? excludeFromSemantics,
+    Color? focusColor,
+    Color? hoverColor,
+    Color? splashColor,
+    Color? highlightColor,
+    double? borderRadius,
+    ShapeBorder? customBorder,
+    bool? enableFeedback,
+    bool? canRequestFocus,
+    FocusNode? focusNode,
+    bool? autofocus,
+    Widget? contentChild,
+    bool? wrapChild,  // Nouveau paramètre
+    Color? shadowColor,
+    double? elevation,
+  }) {
+    return CustomTile(
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      margin: margin ?? this.margin,
+      padding: padding ?? this.padding,
+      isEnabled: isEnabled ?? this.isEnabled,
+      onTap: onTap ?? this.onTap,
+      onDoubleTap: onDoubleTap ?? this.onDoubleTap,
+      onLongPress: onLongPress ?? this.onLongPress,
+      onHighlightChanged: onHighlightChanged ?? this.onHighlightChanged,
+      onHover: onHover ?? this.onHover,
+      excludeFromSemantics: excludeFromSemantics ?? this.excludeFromSemantics,
+      focusColor: focusColor ?? this.focusColor,
+      hoverColor: hoverColor ?? this.hoverColor,
+      splashColor: splashColor ?? this.splashColor,
+      highlightColor: highlightColor ?? this.highlightColor,
+      borderRadius: borderRadius ?? this.borderRadius,
+      customBorder: customBorder ?? this.customBorder,
+      enableFeedback: enableFeedback ?? this.enableFeedback,
+      canRequestFocus: canRequestFocus ?? this.canRequestFocus,
+      focusNode: focusNode ?? this.focusNode,
+      autofocus: autofocus ?? this.autofocus,
+      contentChild: contentChild ?? this.contentChild,
+      wrapChild: wrapChild ?? this.wrapChild,  // Nouveau paramètre
+      shadowColor: shadowColor ?? this.shadowColor,
+      elevation: elevation ?? this.elevation,
     );
   }
 }

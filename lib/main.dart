@@ -1,4 +1,4 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
 void main() => runApp(SimplifeApp());
 
@@ -10,7 +10,7 @@ class SimplifeApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPageView(),
+      home: SignUpPageView(),
     );
   }
 }
