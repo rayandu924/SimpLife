@@ -1,66 +1,44 @@
-library widgets;
+library librairies;
 
-
-
-//export flutter
+//flutter
 export 'package:flutter/material.dart';
 export 'dart:convert';
 
-
-//app
-  //utils
-  //service
-    //form
-      //form
-        //validator
-        export 'utils/form/validator.dart';
-        //onChanged
-
-    //converters
-      //fl_spot.dart
-    //login
-      //login_view.dart
-  //widgets
-    //custom_carousel_slider.dart
-    export 'package:carousel_slider/carousel_slider.dart';
-    export 'views/widgets/custom_carousel_slider.dart';
-    //custom_form.dart
-    export 'package:flutter_form_builder/flutter_form_builder.dart';
-    export 'views/widgets/custom_form.dart';
-    //custom_progress_bar.dart
-    export 'package:percent_indicator/linear_percent_indicator.dart';
-    export 'package:percent_indicator/circular_percent_indicator.dart';
-    export 'views/widgets/custom_progress_bar.dart';
-    //custom_tile.dart
-    export 'views/widgets/custom_tile.dart';
-    //custom_line_chart.dart
-    export 'package:fl_chart/fl_chart.dart';
-    export 'views/widgets/custom_line_chart.dart';
-    //custom_tile_layout.dart
-    export 'views/widgets/custom_tile_layout.dart';
-    //CustomCheckbox.dart
-    //ReorderableListView.dart
-    export 'views/widgets/CustomReorderableListView.dart';
-
-  export 'views/themes/styles.dart';
-
-export 'data/models/HomePageModel.dart';
-export 'data/models/LoginFormModel.dart';
-export 'data/models/LoginPageModel.dart';
-export 'data/models/SignUpFormModel.dart';
-export 'data/models/SignUpPageModel.dart';
-
-export 'views/screens/LoginPageScreen.dart';
-export 'views/screens/SignUpPageScreen.dart';
-export 'views/screens/HomePageScreen.dart';
-
-export 'views/widgets/CustomCheckbox.dart';
-export 'views/widgets/CustomTextField.dart';
+export 'package:flutter_form_builder/flutter_form_builder.dart';
 
 
+//presentation
 
+//pages
+export 'presentation/pages/LoginPage.dart';
+//widgets
+export 'presentation/widgets/Components/CustomForm.dart';
+export 'presentation/widgets/Components/CustomCheckbox.dart';
+export 'presentation/widgets/Components/CustomTextField.dart';
+export 'presentation/widgets/Components/CustomTile.dart';
+export 'presentation/widgets/Components/CustomTileLayout.dart';
+//themes
+export 'presentation/themes/styles.dart';
 
+//domain
 
+//entities
+export 'domain/entities/User.dart';
+//repositoryInterfaces
+export 'domain/repositoryInterfaces/UserRepository.dart';
+//useCases
+export 'domain/useCases/UserUseCases.dart';
 
+//data
 
+//dataSources
+export 'data/dataSources/UserDataSource.dart';
+export 'package:http/http.dart';
+//models
+export 'data/models/UserModel.dart';
+//repositories
+export 'data/repositories/UserRepositoryImpl.dart';
+
+//utilities
+export 'utilities/validator.dart';
 

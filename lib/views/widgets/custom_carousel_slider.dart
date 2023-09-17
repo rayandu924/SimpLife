@@ -1,4 +1,4 @@
-import 'package:simplife/librairies.dart';
+import 'package:simplife/global.dart';
 
 class custom_carousel_slider extends StatefulWidget {
   final List<Widget> children;

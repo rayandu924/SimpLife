@@ -1,4 +1,4 @@
-import 'package:simplife/librairies.dart';
+import 'package:simplife/global.dart';
 
 class LoginPageModel {
   final LoginFormModel loginFormModel = LoginFormModel();

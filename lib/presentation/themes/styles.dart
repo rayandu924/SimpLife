@@ -1,4 +1,4 @@
-import 'package:simplife/librairies.dart';
+import 'package:simplife/global.dart';
 
 //Tile Title
 const TextStyle tileTitle = TextStyle(

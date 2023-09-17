@@ -77,7 +77,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 }
 
-void onChangedTextFormField(TextFieldModel textFieldModel) {
+void onChangedTextFormField(dynamic textFieldModel) {
   if (textFieldModel.validator(textFieldModel.value) != null) {
     textFieldModel.colorTitle.value = Colors.orange;
     textFieldModel.colorBorder.value = Colors.orange;
