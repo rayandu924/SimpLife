@@ -18,7 +18,9 @@ export 'presentation/widgets/Components/CustomTextField.dart';
 export 'presentation/widgets/Components/CustomTile.dart';
 export 'presentation/widgets/Components/CustomTileLayout.dart';
 //themes
-export 'presentation/themes/styles.dart';
+export 'presentation/styles/MyColors.dart';
+export 'presentation/styles/MyTextStyles.dart';
+export 'presentation/styles/MyThemesData.dart';
 
 //domain
 

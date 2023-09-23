@@ -39,7 +39,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
         builder: (context, color, child) {
           return Text(
             widget.field.title,
-            style: checkBoxTitle.copyWith(color: color),
+            style: MyTextStyles.checkBoxTitle.copyWith(color: color),
           );
         },
       ),

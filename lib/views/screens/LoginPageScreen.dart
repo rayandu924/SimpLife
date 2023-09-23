@@ -1,6 +1,6 @@
 import 'package:simplife/global.dart';
 
-class LoginPageView extends StatefulWidget {
+/*class LoginPageView extends StatefulWidget {
   @override
   _LoginPageViewState createState() => _LoginPageViewState();
 }
@@ -35,4 +35,4 @@ class _LoginPageViewState extends State<LoginPageView> {
               ),),
     );
   }
-}
+}*/

@@ -39,7 +39,7 @@ export 'dart:convert';
     //ReorderableListView.dart
     export 'views/widgets/CustomReorderableListView.dart';
 
-  export 'presentation/themes/styles.dart';
+  export 'presentation/styles/MyTextStyles.dart';
 
 export 'olddata/models/HomePageModel.dart';
 export 'olddata/models/LoginFormModel.dart';

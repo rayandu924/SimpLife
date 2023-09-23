@@ -58,11 +58,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   borderRadius: BorderRadius.circular(4)
                 ),
                 labelText: widget.field.title,
-                labelStyle: textFieldTitle.copyWith(color: colorTitle),
-                errorStyle: textFieldError,
+                labelStyle: MyTextStyles.textFieldTitle.copyWith(color: colorTitle),
+                errorStyle: MyTextStyles.textFieldError,
               ),
               cursorColor: Colors.white,
-              style: textFieldHint,
+              style: MyTextStyles.textFieldHint,
               validator: widget.field.fieldModel.validator,
               initialValue: widget.field.initialValue,
               onChanged: (value) {

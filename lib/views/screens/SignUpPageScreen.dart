@@ -1,5 +1,6 @@
 import 'package:simplife/global.dart';
 
+/*
 class SignUpPageView extends StatefulWidget {
   @override
   _SignUpPageViewState createState() => _SignUpPageViewState();
@@ -36,3 +37,4 @@ class _SignUpPageViewState extends State<SignUpPageView> {
     );
   }
 }
+*/
