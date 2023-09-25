@@ -13,7 +13,9 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LoginForm(_submitAuthForm),
+      body: Center(
+        child: LoginForm(_submitAuthForm),
+      ),
     );
   }
 }
