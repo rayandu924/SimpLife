@@ -1,4 +1,4 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
 class MyTile extends StatelessWidget {
   const MyTile ({

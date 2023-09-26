@@ -1,6 +1,6 @@
 main.dart : Fichier principal de l'application où l'application démarre.
 
-global.dart : Fichier qui regroupe les exports des composants, services, utilitaires et autres éléments couramment utilisés.
+librairies.dart : Fichier qui regroupe les exports des composants, services, utilitaires et autres éléments couramment utilisés.
 
 app/ : Dossier contenant le code spécifique de l'application.
     services/ : Services tels que les appels API, gestion de la base de données, etc.

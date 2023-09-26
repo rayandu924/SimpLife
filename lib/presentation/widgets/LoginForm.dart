@@ -1,4 +1,4 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
 class LoginForm extends StatefulWidget {
   final Function(String, String) onSubmit;

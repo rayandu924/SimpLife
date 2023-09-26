@@ -1,4 +1,4 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 
 FormFieldValidator<dynamic> ValidatorCheckbox = (value) {
   if (value == null || !value) {

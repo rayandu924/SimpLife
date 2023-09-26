@@ -1,4 +1,4 @@
-import 'package:simplife/global.dart';
+import 'package:simplife/librairies.dart';
 import 'package:simplife/librairies.dart';
 
 class LoginPage extends StatelessWidget {
