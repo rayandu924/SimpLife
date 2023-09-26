@@ -1,5 +1,5 @@
-import 'package:simplife/librairies.dart';
-import 'package:simplife/librairies.dart';
+import 'package:simplife/libraries.dart';
+import 'package:simplife/libraries.dart';
 
 class LoginPage extends StatelessWidget {
   final UserUseCases userUseCases;

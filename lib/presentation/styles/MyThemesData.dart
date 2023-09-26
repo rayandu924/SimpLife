@@ -1,5 +1,4 @@
-import 'package:simplife/librairies.dart';
-import 'package:simplife/presentation/styles/MyThemes.dart';
+import 'package:simplife/libraries.dart';
 
 class MyThemesData {
   static final lightTheme = ThemeData(

@@ -1,8 +1,8 @@
-import 'package:simplife/librairies.dart';
+import 'package:simplife/libraries.dart';
 
 void main() {
-  final userDataSource = UserDataSource('http://127.0.0.1:5000');
-  final userRepository = UserRepositoryImpl(userDataSource);
+  final remoteUserDataSource = RemoteUserDataSource('http://127.0.0.1:5000');
+  final userRepository = UserRepositoryImpl(remoteUserDataSource);
   final userUseCases = UserUseCases(userRepository);
 
   runApp(MyApp(userUseCases));

@@ -1,4 +1,4 @@
-import 'package:simplife/librairies.dart';
+import 'package:simplife/libraries.dart';
 
 class MyColors {
   // Noirs et Gris

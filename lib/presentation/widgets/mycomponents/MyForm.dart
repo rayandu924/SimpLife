@@ -1,12 +1,9 @@
-import 'package:simplife/librairies.dart';
+import 'package:simplife/libraries.dart';
 
 class FieldModel {
-  final String type;
-  final String name;
-  final String title;
+  final String type, name, title;
   final ValueChanged<dynamic> onChanged;
-  final dynamic initialValue;
-  final dynamic fieldModel;
+  final dynamic initialValue, fieldModel;
 
   FieldModel({
     required this.type,
@@ -36,9 +33,7 @@ class MyForm extends StatelessWidget {
             .expand((field) => [
                   _buildField(field),
                   Padding(padding: EdgeInsets.only(top: verticalSpacing))
-                ])
-            .toList()
-          ..removeLast(),
+                ]).toList()..removeLast(),
       ),
     );
   }
@@ -46,13 +41,9 @@ class MyForm extends StatelessWidget {
   Widget _buildField(FieldModel field) {
     switch (field.type) {
       case 'Checkbox':
-        return CustomCheckbox(
-          field: field,
-        );
+        return CustomCheckbox(field: field);
       case 'TextField':
-        return CustomTextField(
-          field: field,
-        );
+        return CustomTextField(field: field);
       default:
         return SizedBox.shrink();
     }

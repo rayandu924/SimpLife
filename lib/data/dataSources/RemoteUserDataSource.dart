@@ -1,9 +1,9 @@
-import 'package:simplife/librairies.dart';
+import 'package:simplife/libraries.dart';
 
-class UserDataSource {
+class RemoteUserDataSource {
   final String baseUrl;
 
-  UserDataSource(this.baseUrl);
+  RemoteUserDataSource(this.baseUrl);
 
   Future<void> register(UserModel user) async {
     final response = await post(
