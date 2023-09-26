@@ -41,9 +41,9 @@ class MyForm extends StatelessWidget {
   Widget _buildField(FieldModel field) {
     switch (field.type) {
       case 'Checkbox':
-        return CustomCheckbox(field: field);
+        return MyCheckbox(field: field);
       case 'TextField':
-        return CustomTextField(field: field);
+        return MyTextField(field: field);
       default:
         return SizedBox.shrink();
     }

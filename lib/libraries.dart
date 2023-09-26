@@ -12,12 +12,12 @@ export 'package:flutter_form_builder/flutter_form_builder.dart';
 //pages
 export 'presentation/pages/LoginPage.dart';
 //widgets
-export 'presentation/widgets/mycomponents/CustomCheckbox.dart';
-export 'presentation/widgets/mycomponents/MyForm.dart';
-export 'presentation/widgets/mycomponents/CustomTextField.dart';
-export 'presentation/widgets/mycomponents/MyTile.dart';
-export 'presentation/widgets/mycomponents/MyTileLayout.dart';
-export 'presentation/widgets/mycomponents/MyFormContainer.dart';
+export 'presentation/widgets/forms/MyCheckbox.dart';
+export 'presentation/widgets/forms/MyForm.dart';
+export 'presentation/widgets/forms/MyTextField.dart';
+export 'presentation/widgets/main/MyTile.dart';
+export 'presentation/widgets/main/MyTileLayout.dart';
+export 'presentation/widgets/forms/MyFormContainer.dart';
 export 'presentation/widgets/LoginForm.dart';
 //themes
 export 'presentation/styles/MyColors.dart';

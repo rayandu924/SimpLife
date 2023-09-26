@@ -18,18 +18,18 @@ class CheckboxModel {
   });
 }
 
-class CustomCheckbox extends StatefulWidget {
+class MyCheckbox extends StatefulWidget {
   final FieldModel field;
 
-  CustomCheckbox({
+  MyCheckbox({
     required this.field,
   });
 
   @override
-  _CustomCheckboxState createState() => _CustomCheckboxState();
+  _MyCheckboxState createState() => _MyCheckboxState();
 }
 
-class _CustomCheckboxState extends State<CustomCheckbox> {
+class _MyCheckboxState extends State<MyCheckbox> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderCheckbox(

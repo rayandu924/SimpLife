@@ -14,18 +14,18 @@ class TextFieldModel {
   });
 }
 
-class CustomTextField extends StatefulWidget {
+class MyTextField extends StatefulWidget {
   final FieldModel field;
 
-  CustomTextField({
+  MyTextField({
     required this.field,
   });
 
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  _MyTextFieldState createState() => _MyTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<Color>(
