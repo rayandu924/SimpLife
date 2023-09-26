@@ -15,18 +15,18 @@ class MyFormContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomTileLayout(
-      tile: const CustomTile (
+    return MyTileLayout(
+      tile: const MyTile (
         backgroundColor: Color.fromARGB(255, 13, 11, 58),
         wrapChild: true,
       ),
-      topRight: Text(title, style: TextStyle(fontSize: 20)),
+      topLeft: Text(title, style: MyTextStyles.header1),
       center: form,
       bottomCenter: ElevatedButton(
         onPressed: () {buttonCallback();},
         child: Text(buttonTitle),
       ),
-      contentMargin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+      rowMargin: EdgeInsets.symmetric(horizontal: 0, vertical: 15),
     );
   }
 }

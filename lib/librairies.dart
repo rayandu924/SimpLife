@@ -15,8 +15,8 @@ export 'presentation/pages/LoginPage.dart';
 export 'presentation/widgets/Components/CustomCheckbox.dart';
 export 'presentation/widgets/Components/MyForm.dart';
 export 'presentation/widgets/Components/CustomTextField.dart';
-export 'presentation/widgets/Components/CustomTile.dart';
-export 'presentation/widgets/Components/CustomTileLayout.dart';
+export 'presentation/widgets/Components/MyTile.dart';
+export 'presentation/widgets/Components/MyTileLayout.dart';
 export 'presentation/widgets/Components/MyFormContainer.dart';
 export 'presentation/widgets/LoginForm.dart';
 

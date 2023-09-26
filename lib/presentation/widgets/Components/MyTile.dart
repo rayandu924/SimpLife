@@ -1,7 +1,7 @@
 import 'package:simplife/global.dart';
 
-class CustomTile  extends StatelessWidget {
-  const CustomTile ({
+class MyTile extends StatelessWidget {
+  const MyTile ({
     Key? key,
     this.backgroundColor,
     this.padding = const EdgeInsets.all(10),
@@ -93,7 +93,7 @@ class CustomTile  extends StatelessWidget {
     );
   }
 
-  CustomTile copyWith({
+  MyTile copyWith({
     Color? backgroundColor,
     EdgeInsets? margin,
     EdgeInsets? padding,
@@ -119,7 +119,7 @@ class CustomTile  extends StatelessWidget {
     Color? shadowColor,
     double? elevation,
   }) {
-    return CustomTile(
+    return MyTile(
       backgroundColor: backgroundColor ?? this.backgroundColor,
       margin: margin ?? this.margin,
       padding: padding ?? this.padding,
