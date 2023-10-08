@@ -1,24 +1,24 @@
 import 'package:simplife/libraries.dart';
 
 void main() {
-  final remoteUserDataSource = RemoteUserDataSource('http://127.0.0.1:5000');
-  final userRepository = UserRepositoryImpl(remoteUserDataSource);
-  final userUseCases = UserUseCases(userRepository);
+  final userDataSource = UserDataSource('http://127.0.0.1:5000');
 
-  runApp(MyApp(userUseCases));
+  runApp(MyApp(userDataSource));
 }
 
 class MyApp extends StatelessWidget {
-  final UserUseCases userUseCases;
+  final UserDataSource userDataSource;
 
-  MyApp(this.userUseCases);
+  MyApp(this.userDataSource);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: MyThemesData.darkTheme,
-      home: LoginPage(userUseCases),
+      title: 'Simplife',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: LoginPage(userDataSource: userDataSource),
     );
   }
 }

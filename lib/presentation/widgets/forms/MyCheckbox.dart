@@ -1,66 +1,33 @@
 import 'package:simplife/libraries.dart';
 
-class CheckboxModel {
-  final ValueNotifier<Color> colorTitle = ValueNotifier<Color>(Colors.orange);
-  final Color colorCheck;
-  final Color colorActive;
-  final Color colorBorder;
-  final FormFieldValidator<dynamic> validator;
-  final ValueNotifier<bool> variable;
-  bool value = false;
+class MyCheckbox extends StatelessWidget {
+  final CheckboxModel fieldModel;
 
-  CheckboxModel({
-    this.colorCheck = Colors.white,
-    this.colorActive = Colors.green,
-    this.colorBorder = Colors.red,
-    required this.validator,
-    required this.variable,
-  });
-}
+  MyCheckbox({required this.fieldModel});
 
-class MyCheckbox extends StatefulWidget {
-  final FieldModel field;
-
-  MyCheckbox({
-    required this.field,
-  });
-
-  @override
-  _MyCheckboxState createState() => _MyCheckboxState();
-}
-
-class _MyCheckboxState extends State<MyCheckbox> {
   @override
   Widget build(BuildContext context) {
-    return FormBuilderCheckbox(
-      name: widget.field.name,
-      title: ValueListenableBuilder<Color>(
-        valueListenable: widget.field.fieldModel.colorTitle,
-        builder: (context, color, child) {
-          return Text(
-            widget.field.title,
-            style: MyTextStyles.checkBoxTitle.copyWith(color: color),
-          );
-        },
-      ),
-      validator: widget.field.fieldModel.validator,
-      initialValue: widget.field.initialValue,
-      onChanged: (value) => {
-        widget.field.fieldModel.value = value,
-        widget.field.onChanged(widget.field.fieldModel)
-      },
-      checkColor: widget.field.fieldModel.colorCheck,
-      activeColor: widget.field.fieldModel.colorActive,
-      side: BorderSide(color: widget.field.fieldModel.colorBorder, width: 2),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          fieldModel.title,
+          style: TextStyle(color: fieldModel.colorTitle),
+        ),
+        FormBuilderCheckbox(
+          title: Text(fieldModel.title),
+          name: fieldModel.name,
+          initialValue: fieldModel.initialValue as bool,
+          activeColor: fieldModel.colorActive,
+          checkColor: fieldModel.colorCheck,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: fieldModel.colorBorder),
+            ),
+          ),
+          validator: fieldModel.validator,
+        ),
+      ],
     );
-  }
-}
-
-void onChangedCheckbox(CheckboxModel checkboxModel) {
-  if (checkboxModel.validator(checkboxModel.value) != null) {
-    checkboxModel.colorTitle.value = Colors.red;
-  } else {
-    checkboxModel.colorTitle.value = Colors.green;
-    checkboxModel.variable.value = checkboxModel.value;
   }
 }

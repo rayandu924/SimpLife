@@ -1,51 +1,45 @@
 import 'package:simplife/libraries.dart';
 
-class FieldModel {
-  final String type, name, title;
-  final ValueChanged<dynamic> onChanged;
-  final dynamic initialValue, fieldModel;
+class MyForm extends StatefulWidget {
+  final List<FieldModel> fields;
+  final double verticalSpacing;
 
-  FieldModel({
-    required this.type,
-    required this.name,
-    required this.title,
-    required this.onChanged,
-    required this.initialValue,
-    required this.fieldModel,
-  });
+  MyForm({required this.fields, this.verticalSpacing = 10.0});
+
+  @override
+  _MyFormState createState() => _MyFormState();
+
+  // Expose currentState of _MyFormState
+  _MyFormState? get currentState => _MyFormState();
 }
 
-class MyForm extends StatelessWidget {
-  final List<FieldModel> fields;
-  final double verticalSpacing; // ajout d'un attribut pour l'espacement
+class _MyFormState extends State<MyForm> {
+  final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
-  const MyForm({
-    required this.fields,
-    this.verticalSpacing = 10.0, // valeur par défaut à 10.0
-  });
+  Map<String, dynamic> getFormData() {
+    return formKey.currentState?.value ?? {};
+  }
 
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
+      key: formKey,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: fields
-            .expand((field) => [
-                  _buildField(field),
-                  Padding(padding: EdgeInsets.only(top: verticalSpacing))
-                ]).toList()..removeLast(),
+        children: widget.fields.map((field) {
+          if (field is TextFieldModel) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: widget.verticalSpacing),
+              child: MyTextField(fieldModel: field),
+            );
+          } else if (field is CheckboxModel) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: widget.verticalSpacing),
+              child: MyCheckbox(fieldModel: field),
+            );
+          }
+          return SizedBox.shrink();  // Default for unknown field types
+        }).toList(),
       ),
     );
-  }
-
-  Widget _buildField(FieldModel field) {
-    switch (field.type) {
-      case 'Checkbox':
-        return MyCheckbox(field: field);
-      case 'TextField':
-        return MyTextField(field: field);
-      default:
-        return SizedBox.shrink();
-    }
   }
 }

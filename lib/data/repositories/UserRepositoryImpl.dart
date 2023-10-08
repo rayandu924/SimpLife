@@ -1,20 +1,15 @@
-
 import 'package:simplife/libraries.dart';
 
-class UserRepositoryImpl implements UserRepository {
-  final RemoteUserDataSource dataSource;
+class UserRepository {
+  final UserDataSource dataSource;
 
-  UserRepositoryImpl(this.dataSource);
+  UserRepository(this.dataSource);
 
-  @override
-  Future<void> register(String email, String password) async {
-    final user = UserModel(email: email, password: password);
+  Future<void> register(UserModel user) async {
     await dataSource.register(user);
   }
 
-  @override
-  Future<void> login(String email, String password) async {
-    final user = UserModel(email: email, password: password);
+  Future<void> login(UserModel user) async {
     await dataSource.login(user);
   }
 }

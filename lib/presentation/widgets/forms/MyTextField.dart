@@ -1,89 +1,30 @@
 import 'package:simplife/libraries.dart';
 
-class TextFieldModel {
-  final ValueNotifier<Color> colorTitle = ValueNotifier<Color>(Colors.orange);
-  final ValueNotifier<Color> colorBorder = ValueNotifier<Color>(Colors.orange);
-  final FormFieldValidator<dynamic> validator;
-  final ValueNotifier<String> variable;
-  String value = '';
+class MyTextField extends StatelessWidget {
+  final TextFieldModel fieldModel;
 
+  MyTextField({required this.fieldModel});
 
-  TextFieldModel({
-    required this.validator,
-    required this.variable,
-  });
-}
-
-class MyTextField extends StatefulWidget {
-  final FieldModel field;
-
-  MyTextField({
-    required this.field,
-  });
-
-  @override
-  _MyTextFieldState createState() => _MyTextFieldState();
-}
-
-class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<Color>(
-      valueListenable: widget.field.fieldModel.colorTitle,
-      builder: (context, colorTitle, child) {
-        return ValueListenableBuilder<Color>(
-          valueListenable: widget.field.fieldModel.colorBorder,
-          builder: (context, colorBorder, child) {
-            return FormBuilderTextField(
-              name: widget.field.name,
-              decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: colorBorder, width: 13),
-                  borderRadius: BorderRadius.circular(4)
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: colorBorder, width: 13),
-                  borderRadius: BorderRadius.circular(4)
-                ),
-                focusedErrorBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: colorBorder, width: 13),
-                  borderRadius: BorderRadius.circular(4)
-                ),
-                errorBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: colorBorder, width: 13),
-                  borderRadius: BorderRadius.circular(4)
-                ),
-                disabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: colorBorder, width: 13),
-                  borderRadius: BorderRadius.circular(4)
-                ),
-                labelText: widget.field.title,
-                labelStyle: MyTextStyles.textFieldTitle.copyWith(color: colorTitle),
-                errorStyle: MyTextStyles.textFieldError,
-              ),
-              cursorColor: Colors.white,
-              style: MyTextStyles.textFieldHint,
-              validator: widget.field.fieldModel.validator,
-              initialValue: widget.field.initialValue,
-              onChanged: (value) {
-                widget.field.fieldModel.value = value;
-                widget.field.onChanged(widget.field.fieldModel);
-              },            
-            );
-          },
-        );
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          fieldModel.title,
+          style: TextStyle(color: fieldModel.colorTitle),
+        ),
+        FormBuilderTextField(
+          name: fieldModel.name,
+          initialValue: fieldModel.initialValue,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: fieldModel.colorBorder),
+            ),
+          ),
+          validator: fieldModel.validator,
+        ),
+      ],
     );
-  }
-}
-
-void onChangedTextFormField(dynamic textFieldModel) {
-  if (textFieldModel.validator(textFieldModel.value) != null) {
-    textFieldModel.colorTitle.value = Colors.orange;
-    textFieldModel.colorBorder.value = Colors.orange;
-  } else {
-    textFieldModel.colorTitle.value = Colors.green;
-    textFieldModel.colorBorder.value = Colors.green;
-    textFieldModel.variable.value = textFieldModel.value;
   }
 }
