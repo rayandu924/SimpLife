@@ -1,3 +1,9 @@
+// Custom Tile widget for improved and flexible design
+///
+/// A customizable tile that can be used to display content with various styles and actions.
+/// This tile is an extension of InkWell, allowing it to respond to touch gestures with ink splash.
+/// Various properties can be set to customize its appearance and behavior.
+
 import 'package:simplife/libraries.dart';
 
 class MyTile extends StatelessWidget {

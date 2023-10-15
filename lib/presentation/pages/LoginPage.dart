@@ -1,5 +1,5 @@
 
-import 'package:simplife/libraries.dart';
+/*import 'package:simplife/libraries.dart';
 
 class LoginPage extends StatelessWidget {
   final UserDataSource userDataSource;
@@ -7,7 +7,7 @@ class LoginPage extends StatelessWidget {
 
   LoginPage({required this.userDataSource}) : userRepository = UserRepository(userDataSource);
 
-  void _submitAuthForm(Map<String, dynamic> attributes) {
+  void _submitLoginForm(Map<String, dynamic> attributes) {
     // Create a UserModel (pseudo-implementation)
     final UserModel user = UserModel(attributes: attributes);
     userRepository.login(user);
@@ -43,10 +43,11 @@ class LoginPage extends StatelessWidget {
           buttonTitle: "Submit",
           buttonCallback: () {
               print(form.currentState?.getFormData() ?? {});
-              _submitAuthForm(form.currentState?.getFormData() ?? {});
+              _submitLoginForm(form.currentState?.getFormData() ?? {});
           },
         ),
       ),
     );
   }
 }
+*/

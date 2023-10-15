@@ -11,14 +11,14 @@ export 'package:flutter_form_builder/flutter_form_builder.dart';
 
 //pages
 export 'presentation/pages/LoginPage.dart';
+export 'presentation/pages/FormPage.dart';
 //widgets
-export 'presentation/widgets/forms/MyFieldModels.dart';
 export 'presentation/widgets/forms/MyCheckbox.dart';
-export 'presentation/widgets/forms/MyForm.dart';
 export 'presentation/widgets/forms/MyTextField.dart';
-export 'presentation/widgets/main/MyTile.dart';
-export 'presentation/widgets/main/MyTileLayout.dart';
-export 'presentation/widgets/forms/MyFormContainer.dart';
+export 'presentation/widgets/Tiles/MyTile.dart';
+export 'presentation/widgets/Tiles/MyTileLayout.dart';
+export 'presentation/widgets/forms/FormFieldModel.dart';
+export 'presentation/widgets/forms/MyFormFieldBuilder.dart';
 //themes
 export 'presentation/styles/MyColors.dart';
 export 'presentation/styles/MyTextStyles.dart';

@@ -9,6 +9,7 @@ FormFieldValidator<dynamic> ValidatorCheckbox = (value) {
 
 
 FormFieldValidator<dynamic> ValidatorEmail = (value) {
+  return null;
   // Regular expression for email validation
   const pattern = r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+';
   final regExp = RegExp(pattern);
@@ -22,6 +23,7 @@ FormFieldValidator<dynamic> ValidatorEmail = (value) {
 };
 
 FormFieldValidator<dynamic> ValidatorPassword = (value) {
+  return null;
   if (value == null || value.isEmpty) {
     return 'Veuillez saisir un mot de passe';
   } else if (value.length < 8) {

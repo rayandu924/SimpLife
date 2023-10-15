@@ -1,31 +1,41 @@
 import 'package:simplife/libraries.dart';
 
-class MyCheckbox extends StatelessWidget {
-  final CheckboxModel fieldModel;
+class MyCheckbox extends StatefulWidget {
+  final FormFieldModel fieldModel;
+  final Key? key;
 
-  MyCheckbox({required this.fieldModel});
+  MyCheckbox({this.key, required this.fieldModel}) : super(key: key);
+
+  @override
+  MyCheckboxState createState() => MyCheckboxState();
+}
+
+class MyCheckboxState extends State<MyCheckbox> {
+  bool? _value;
+
+  bool? get currentValue => _value;
 
   @override
   Widget build(BuildContext context) {
+    Color colorTitle = widget.fieldModel.additionalAttributes['colorTitle'] ?? Colors.black;
+    Color colorBorder = widget.fieldModel.additionalAttributes['colorBorder'] ?? Colors.grey;
+    // Vous pouvez ajouter d'autres couleurs ou attributs ici si nécessaire
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          fieldModel.title,
-          style: TextStyle(color: fieldModel.colorTitle),
+          widget.fieldModel.title,
+          style: TextStyle(color: colorTitle),
         ),
-        FormBuilderCheckbox(
-          title: Text(fieldModel.title),
-          name: fieldModel.name,
-          initialValue: fieldModel.initialValue as bool,
-          activeColor: fieldModel.colorActive,
-          checkColor: fieldModel.colorCheck,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: fieldModel.colorBorder),
-            ),
-          ),
-          validator: fieldModel.validator,
+        Checkbox(
+          value: widget.fieldModel.initialValue as bool,
+          onChanged: (value) {
+            setState(() {
+              _value = value;
+            });
+          },
+          // Vous pouvez ajouter d'autres attributs ici si nécessaire
         ),
       ],
     );

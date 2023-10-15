@@ -1,4 +1,4 @@
-import 'package:simplife/libraries.dart';
+/*import 'package:simplife/libraries.dart';
 
 class SignUpPage extends StatelessWidget {
   final dynamic userUseCases;  // Placeholder type for userUseCases
@@ -37,9 +37,10 @@ class SignUpPage extends StatelessWidget {
           form: MyForm(fields: fields),
           title: "Sign Up",
           buttonTitle: "Register",
-          buttonCallback: () => _submitSignUpForm({}),  // Sample attributes
+          buttonCallback: () => _submitSignUpForm({}),
         ),
       ),
     );
   }
 }
+*/

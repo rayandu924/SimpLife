@@ -1,28 +1,45 @@
 import 'package:simplife/libraries.dart';
 
-class MyTextField extends StatelessWidget {
-  final TextFieldModel fieldModel;
+class MyTextField extends StatefulWidget {
+  final FormFieldModel fieldModel;
+  final Key? key;
 
-  MyTextField({required this.fieldModel});
+  MyTextField({this.key, required this.fieldModel}) : super(key: key);
+
+
+  @override
+  MyTextFieldState createState() => MyTextFieldState();
+}
+
+class MyTextFieldState extends State<MyTextField> {
+  String? _value;
+
+  String get currentValue => _value ?? '';
 
   @override
   Widget build(BuildContext context) {
+    Color colorTitle = widget.fieldModel.additionalAttributes['colorTitle'] ?? Colors.black;
+    Color colorBorder = widget.fieldModel.additionalAttributes['colorBorder'] ?? Colors.grey;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          fieldModel.title,
-          style: TextStyle(color: fieldModel.colorTitle),
+          widget.fieldModel.title,
+          style: TextStyle(color: colorTitle),
         ),
-        FormBuilderTextField(
-          name: fieldModel.name,
-          initialValue: fieldModel.initialValue,
+        TextField(
           decoration: InputDecoration(
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: fieldModel.colorBorder),
+              borderSide: BorderSide(color: colorBorder),
             ),
           ),
-          validator: fieldModel.validator,
+          onChanged: (value) {
+            setState(() {
+              _value = value;
+            });
+          },
+          // Vous pouvez ajouter d'autres attributs ici si nécessaire
         ),
       ],
     );

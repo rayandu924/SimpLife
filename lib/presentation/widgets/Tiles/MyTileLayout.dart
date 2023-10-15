@@ -1,13 +1,14 @@
+
+// Custom Tile Layout for organizing widget positions inside the tile
+///
+/// This layout organizes the widgets inside a custom tile based on the positions provided.
+/// It provides easy positioning for widgets on top, center, and bottom of the tile.
+/// Each of these positions can further have left, center, and right alignments.
+
 import 'package:simplife/libraries.dart';
 
 class MyTileLayout extends StatelessWidget {
-  final Widget? topLeft;
-  final Widget? topCenter;
-  final Widget? topRight;
-  final Widget? bottomLeft;
-  final Widget? bottomCenter;
-  final Widget? bottomRight;
-  final Widget? center;
+  final Map<String, Widget?> widgetPositions;
   final MyTile tile;
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry rowMargin;
@@ -15,18 +16,12 @@ class MyTileLayout extends StatelessWidget {
   MyTileLayout({
     Key? key,
     required this.tile,
-    this.topLeft,
-    this.topCenter,
-    this.topRight,
-    this.bottomLeft,
-    this.bottomCenter,
-    this.bottomRight,
-    this.center,
+    this.widgetPositions = const {},
     this.padding = const EdgeInsets.all(0),
     this.rowMargin = const EdgeInsets.symmetric(vertical: 8.0), // Espacement par défaut entre les lignes
   }) : super(key: key);
 
-  Widget _buildRow(Widget? left, Widget? center, Widget? right) {
+  Widget _buildRow({Widget? left, Widget? center, Widget? right}) {
     return Container(
       margin: rowMargin,
       child: Row(
@@ -48,12 +43,12 @@ class MyTileLayout extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildRow(topLeft, topCenter, topRight),
-            if (center != null) Padding(
+            _buildRow(left: widgetPositions['topLeft'], center: widgetPositions['topCenter'], right: widgetPositions['topRight']),
+            if (widgetPositions['center'] != null) Padding(
               padding: rowMargin, 
-              child: center!,
+              child: widgetPositions['center']!,
             ),
-            _buildRow(bottomLeft, bottomCenter, bottomRight),
+            _buildRow(left: widgetPositions['bottomLeft'], center: widgetPositions['bottomCenter'], right: widgetPositions['bottomRight']),
           ],
         ),
       ),
