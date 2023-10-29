@@ -15,12 +15,20 @@ class MyCheckboxState extends State<MyCheckbox> {
 
   bool? get currentValue => _value;
 
+
+  Color? colorTitle;
+  Color? colorBorder;
+
+  @override
+  void initState() {
+    super.initState();
+    _value = widget.fieldModel.initialValue ?? false;
+    colorTitle = widget.fieldModel.additionalAttributes['colorTitle'] ?? Colors.black;
+    colorBorder = widget.fieldModel.additionalAttributes['colorBorder'] ?? Colors.grey;
+  }
+
   @override
   Widget build(BuildContext context) {
-    Color colorTitle = widget.fieldModel.additionalAttributes['colorTitle'] ?? Colors.black;
-    Color colorBorder = widget.fieldModel.additionalAttributes['colorBorder'] ?? Colors.grey;
-    // Vous pouvez ajouter d'autres couleurs ou attributs ici si nécessaire
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -29,10 +37,11 @@ class MyCheckboxState extends State<MyCheckbox> {
           style: TextStyle(color: colorTitle),
         ),
         Checkbox(
-          value: widget.fieldModel.initialValue as bool,
+          value: _value,
           onChanged: (value) {
             setState(() {
               _value = value;
+              print(_value);
             });
           },
           // Vous pouvez ajouter d'autres attributs ici si nécessaire

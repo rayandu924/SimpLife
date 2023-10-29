@@ -6,7 +6,6 @@ class MyTextField extends StatefulWidget {
 
   MyTextField({this.key, required this.fieldModel}) : super(key: key);
 
-
   @override
   MyTextFieldState createState() => MyTextFieldState();
 }
@@ -30,6 +29,7 @@ class MyTextFieldState extends State<MyTextField> {
         ),
         TextField(
           decoration: InputDecoration(
+            hintText: 'Texte Description',
             border: OutlineInputBorder(
               borderSide: BorderSide(color: colorBorder),
             ),

@@ -18,7 +18,6 @@ export 'presentation/widgets/forms/MyTextField.dart';
 export 'presentation/widgets/Tiles/MyTile.dart';
 export 'presentation/widgets/Tiles/MyTileLayout.dart';
 export 'presentation/widgets/forms/FormFieldModel.dart';
-export 'presentation/widgets/forms/MyFormFieldBuilder.dart';
 //themes
 export 'presentation/styles/MyColors.dart';
 export 'presentation/styles/MyTextStyles.dart';
@@ -33,7 +32,7 @@ export 'package:http/http.dart';
 //models
 export 'data/models/UserModel.dart';
 //repositories
-export 'data/repositories/UserRepositoryImpl.dart';
+export 'data/repositories/UserRepository.dart';
 
 //utilities
 export 'utilities/validator.dart';

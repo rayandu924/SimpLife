@@ -1,15 +1,12 @@
 import 'package:simplife/libraries.dart';
 
 void main() {
-  final userDataSource = UserDataSource('http://127.0.0.1:5000');
-
-  runApp(MyApp(userDataSource));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final UserDataSource userDataSource;
-
-  MyApp(this.userDataSource);
+  final UserDataSource userDataSource = UserDataSource('http://127.0.0.1:5000'); 
+  late UserRepository userRepository = UserRepository(userDataSource);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FormPage(),
+      home: FormPage(userRepository: userRepository),
     );
   }
 }
