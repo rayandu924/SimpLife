@@ -2,6 +2,7 @@ library librairies;
 
 //flutter
 export 'package:flutter/material.dart';
+export 'package:http/http.dart';
 export 'dart:convert';
 
 export 'package:flutter_form_builder/flutter_form_builder.dart';

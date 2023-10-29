@@ -1,8 +1,16 @@
+
 import 'package:simplife/libraries.dart';
+
 class FormPage extends StatefulWidget {
   final UserRepository userRepository;
+  final String title;
+  final String submitButtonText;
 
-  FormPage({required this.userRepository});
+  FormPage({
+    required this.userRepository,
+    this.title = 'Form Page',
+    this.submitButtonText = 'Submit',
+  });
 
   @override
   _FormPageState createState() => _FormPageState();
@@ -15,14 +23,19 @@ class _FormPageState extends State<FormPage> {
 
   void _submitLoginForm(Map<String, dynamic> attributes) {
     final UserModel user = UserModel(attributes: attributes);
-    widget.userRepository.login(user);
+    try {
+      widget.userRepository.login(user);
+      // Provide feedback to the user about successful login
+    } catch (error) {
+      // Handle error and provide feedback to the user
+      print('Login failed: \$error');
+    }
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Form Page')),
+      appBar: AppBar(title: Text(widget.title)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -52,16 +65,14 @@ class _FormPageState extends State<FormPage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
-                    // Logic to get the form data
-                    Map<String, dynamic> formData = {};  // Placeholder for form data
-                    _formKey.currentState?.save();
-                    formData['username'] = _usernameKey.currentState?.currentValue;
-                    formData['rememberMe'] = _rememberMeKey.currentState?.currentValue;
-                    print(formData);
+                    Map<String, dynamic> formData = {
+                      'username': _usernameKey.currentState?.currentValue,
+                      'rememberMe': _rememberMeKey.currentState?.currentValue,
+                    };
                     _submitLoginForm(formData);
                   }
                 },
-                child: const Text('Submit'),
+                child: Text(widget.submitButtonText),
               )
             ],
           ),

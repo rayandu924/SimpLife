@@ -5,7 +5,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final UserDataSource userDataSource = UserDataSource('http://127.0.0.1:5000'); 
+  final UserDataSource userDataSource = UserDataSource(Client(), 'http://localhost:3000'); 
   late UserRepository userRepository = UserRepository(userDataSource);
 
   @override

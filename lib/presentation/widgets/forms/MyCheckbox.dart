@@ -1,30 +1,27 @@
+
 import 'package:simplife/libraries.dart';
 
 class MyCheckbox extends StatefulWidget {
   final FormFieldModel fieldModel;
-  final Key? key;
-
-  MyCheckbox({this.key, required this.fieldModel}) : super(key: key);
+  
+  MyCheckbox({required this.fieldModel, Key? key}) : super(key: key);
 
   @override
   MyCheckboxState createState() => MyCheckboxState();
 }
 
 class MyCheckboxState extends State<MyCheckbox> {
-  bool? _value;
+  bool _value = false;
 
-  bool? get currentValue => _value;
+  bool get currentValue => _value;
 
-
-  Color? colorTitle;
-  Color? colorBorder;
+  Color get colorTitle => widget.fieldModel.additionalAttributes['colorTitle'] ?? Colors.black;
+  Color get colorBorder => widget.fieldModel.additionalAttributes['colorBorder'] ?? Colors.grey;
 
   @override
   void initState() {
     super.initState();
     _value = widget.fieldModel.initialValue ?? false;
-    colorTitle = widget.fieldModel.additionalAttributes['colorTitle'] ?? Colors.black;
-    colorBorder = widget.fieldModel.additionalAttributes['colorBorder'] ?? Colors.grey;
   }
 
   @override
@@ -40,11 +37,10 @@ class MyCheckboxState extends State<MyCheckbox> {
           value: _value,
           onChanged: (value) {
             setState(() {
-              _value = value;
-              print(_value);
+              _value = value ?? false;
             });
           },
-          // Vous pouvez ajouter d'autres attributs ici si nécessaire
+          // You can add other attributes here if necessary
         ),
       ],
     );
