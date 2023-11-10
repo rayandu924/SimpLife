@@ -11,7 +11,6 @@ export 'package:flutter_form_builder/flutter_form_builder.dart';
 //presentation
 
 //pages
-export 'presentation/pages/LoginPage.dart';
 export 'presentation/pages/FormPage.dart';
 //widgets
 export 'presentation/widgets/forms/MyCheckbox.dart';
